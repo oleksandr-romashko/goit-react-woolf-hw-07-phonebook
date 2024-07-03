@@ -22,15 +22,15 @@ The live page for this repository can be viewed at [GitHub Pages](https://oleksa
 
 ## Task
 
-The main goal was to refactor [existing repository code](https://github.com/oleksandr-romashko/goit-react-hw-04-phonebook) using React Redux and Redux Toolkit.
+The main goal was to refactor [existing repository code](https://github.com/oleksandr-romashko/goit-react-woolf-hw-06-phonebook) using React, Redux Toolkit and [mockapi.io API](https://mockapi.io/).
 
 This solution follows provided requirements. You may read more about them [here](./assets/task/README.en.md).
 
 ## Technologies Used
 
-- React
 - React Redux
 - Redux Toolkit
+- Redux thunk for asynchronous requests to back-end API using axios and [mockapi.io](https://mockapi.io/) as back-end
 - Styled Components
 
 ## Getting Started
@@ -39,6 +39,10 @@ This solution follows provided requirements. You may read more about them [here]
 
 - Node.js
 - npm
+- [mockapi.io](https://mockapi.io/) back-end set-up for the following operations:
+  - `fetchContacts` - get an array of contacts (GET method) using GET request - action type `contacts/fetchAll`.
+  - `addContact` - add contact (POST method) - action type `contacts/addContact`.
+  - `deleteContact` - deletes a contact (DELETE method) - action type `contacts/deleteContact`.
 
 ### Installation
 
