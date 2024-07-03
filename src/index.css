@@ -1,0 +1,63 @@
+@import-normalize; /* bring in normalize.css styles */
+
+:root {
+  --color-basic-white: #fcfcfc;
+  --color-basic-black: #050505; 
+  --color-basic-grey: #d0d0d0;
+  --color-pure-white: #fff;
+  --color-accent-blue-light: rgba(124, 168, 225, 0.8);
+  --color-accent-blue-dark: #2764bb;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings: 'slnt' 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--color-basic-black);
+  background-color: #FCFCFC;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style-type: none;
+}
+
+a {
+  color: currentColor;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
