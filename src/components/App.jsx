@@ -1,7 +1,6 @@
 import Page from 'components/Page/Page.styled';
 import Header from 'components/Header/Header.styled';
 import HeaderIcons from './Icons/HeaderIcons.styled';
-import LocalStorageIcon from './Icons/LocalStorageIcon';
 import Phonebook from 'components/Phonebook/Phonebook';
 import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 
@@ -15,7 +14,7 @@ const App = () => {
       <Header>
         <p>Contact Book</p>
         <HeaderIcons>
-          <LocalStorageIcon fill='var(--color-basic-white)' />
+          {/* <LocalStorageIcon fill='var(--color-basic-white)' /> */}
         </HeaderIcons>
       </Header>
       <ErrorBoundary>

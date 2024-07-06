@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { getContacts } from '../../store/contacts/selectors';
+import { getContacts } from 'store/contacts/selectors';
 import { getFilter } from 'store/filter/selectors';
 import { deleteContactByIdAction } from 'store/contacts/slice';
 
@@ -23,9 +23,6 @@ const ContactList = () => {
    * @returns {object[]} Array of filtered contacts.
    */
   const filterContacts = () => {
-    if (!contacts.length) {
-      return [];
-    }
     if (!filter) {
       return contacts;
     }
@@ -47,11 +44,6 @@ const ContactList = () => {
     dispatch(deleteContactByIdAction(id));
   };
 
-  // no contacts message
-  if (!contacts.length) {
-    return 'You have no contacts at the moment.';
-  }
-
   const filteredContacts = filterContacts(contacts);
 
   // no results after contacts filtration message
@@ -63,6 +55,7 @@ const ContactList = () => {
     <List aria-label='Contacts list'>
       {filteredContacts.map(el => (
         <Item key={el.id} aria-label='Contact' data-id={el.id}>
+        {console.log(el.id)}
           <div>
             <p>
               <span>{el.name}:&nbsp;</span>
