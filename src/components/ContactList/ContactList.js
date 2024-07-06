@@ -55,7 +55,6 @@ const ContactList = () => {
     <List aria-label='Contacts list'>
       {filteredContacts.map(el => (
         <Item key={el.id} aria-label='Contact' data-id={el.id}>
-        {console.log(el.id)}
           <div>
             <p>
               <span>{el.name}:&nbsp;</span>
