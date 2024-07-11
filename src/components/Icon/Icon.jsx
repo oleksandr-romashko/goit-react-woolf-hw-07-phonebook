@@ -1,5 +1,4 @@
 import { ImportantIcon } from "./ImportantIcon";
-import { CrossPlatform } from "./CrossPlatform";
 import { IdeaIcon } from "./IdeaIcon";
 
 
