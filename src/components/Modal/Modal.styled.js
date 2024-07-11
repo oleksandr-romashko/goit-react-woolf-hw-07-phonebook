@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import Button from 'components/Button/BasicButton.styled';
+import Icon from 'components/Icon/Icon';
 
 /**
  * Modal window backdrop.
@@ -87,3 +89,11 @@ export const Title = styled('h2')({
     lineHeight: '24px',
   },
 });
+
+export const CloseBtn = ({ className, onClick }) => {
+  return (
+    <Button className={className} onClick={onClick}>
+      <Icon name="close" className="close-icon" />
+    </Button>
+  );
+};
