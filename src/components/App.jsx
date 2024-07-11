@@ -4,14 +4,14 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { selectDoNotShowDisclaimerAgain } from 'store/persistent/selectors';
 import { selectIsDisclaimerModalOpen } from 'store/modals/selectors';
-import { setIsDisclaimerModalOpen } from 'store/modals/slice';
+import { setIsDisclaimerModalOpen, setIsUserProfileModalOpen } from 'store/modals/slice';
 
-import Page from 'components/Page/Page.styled';
-import Header from 'components/Header/Header.styled';
-import HeaderControls from './Header/HeaderControls.styled';
 import Phonebook from 'components/Phonebook/Phonebook';
 import DisclaimerModal from './Modal/DisclaimerModal';
 import UserProfileButton from './Button/UserProfileButton';
+import Page from 'components/Page/Page.styled';
+import Header from 'components/Header/Header.styled';
+import HeaderControls from './Header/HeaderControls.styled';
 
 /**
  * Contact Book application component.
@@ -29,6 +29,21 @@ const App = () => {
       }
     }, [dispatch, doNotShowDisclaimer]
   );
+
+  /**
+   * Handles ser profile modal show.
+   * @param {React.SyntheticEvent} event Ocurred event.
+   */
+  const handleUserProfileBtnClick = (event) => {
+    const userProfileBtn = event.target.closest('button');
+    if (userProfileBtn) {
+      dispatch(setIsUserProfileModalOpen(true));
+      if (userProfileBtn === document.activeElement) {
+        userProfileBtn.blur();
+      }
+    }    
+    
+  };
   
   return (
     <>
@@ -36,7 +51,7 @@ const App = () => {
         <ErrorBoundary>
           <Header>
             <p>Contact Book</p>
-            <HeaderControls>
+            <HeaderControls onClick={handleUserProfileBtnClick}>
               <UserProfileButton />
             </HeaderControls>
           </Header>
