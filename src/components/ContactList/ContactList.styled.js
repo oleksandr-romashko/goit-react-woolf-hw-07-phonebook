@@ -4,8 +4,11 @@ import styled from 'styled-components';
  * Styled list to display contacts.
  */
 export const List = styled('ul')({
-  width: 'fit-content',
+  display: 'list-item',
+  boxSizing: 'border-box',
+  maxWidth: '625px',
   marginLeft: '52px',
+  marginRight: '12px',
   listStyleType: 'disc',
 });
 
@@ -14,9 +17,8 @@ export const List = styled('ul')({
  */
 export const Item = styled('li')({
   width: '100%',
-  alignItems: 'baseline',
-  '&:not(:first-child) ': {
-    marginTop: '32px',
+  '&:not(:last-child) ': {
+    marginBottom: '32px',
   },
   '& > div': {
     width: '100%',
@@ -46,7 +48,34 @@ export const Item = styled('li')({
       whiteSpace: 'nowrap',
       '&:hover, &:focus': {
         textDecoration: 'underline',
-      }
-    }
+      },
+    },
+  },
+  '& button': {
+    minWidth: '100px',
+    minHeight: '36px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
+
+/**
+ * Informational text about delete operation results.
+ */
+export const InfoText = styled('p')({
+  width: '100%',
+  maxHeight: '0',
+  opacity: '0',
+  marginTop: '8px',
+  textAlign: 'right',
+  fontSize: '18px',
+  fontWeight: '400',
+  lineHeight: '18px',
+  color: 'red',
+  transition: 'opacity 280ms ease-in-out, max-height 480ms ease-in-out',
+  '&[data-info-show="true"]': {
+    maxHeight: '300px',
+    opacity: '1',
   },
 });

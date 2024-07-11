@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 const Button = styled('button')({
+  position: 'relative',
   display: 'inline-flex',
   padding: '6px 16px',
   justifyContent: 'center',
@@ -11,6 +12,10 @@ const Button = styled('button')({
   fontWeight: 500,
   lineHeight: '22px',
   color: 'inherit',
+
+  '& > .spinner': {
+    position: 'absolute',
+  },
 
   /* prevent text selection */
   '-webkit-user-select': 'none' /* Safari */,
@@ -37,6 +42,7 @@ const Button = styled('button')({
   '&:active': {
     border: '1px solid var(--color-accent-blue-dark)',
     background: 'linear-gradient(180deg, #4a94fc 0%, #0a67e3 100%)',
+    outline: 'unset',
   },
 });
 

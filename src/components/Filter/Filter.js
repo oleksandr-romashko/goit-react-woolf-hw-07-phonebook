@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import throttle from 'lodash.throttle';
 
-import { getFilter } from '../../store/filter/selectors';
+import { selectFilter } from '../../store/filter/selectors';
 import { setFilterAction } from 'store/filter/slice';
 
 import { 
@@ -16,7 +16,7 @@ import {
  * @returns {JSX.Element} Rendered filter component.
  */
 const Filter = () => {
-  const filterText = useSelector(getFilter);
+  const filterText = useSelector(selectFilter);
   const dispatch = useDispatch();
 
   /**

@@ -1,6 +1,6 @@
 /**
- * Selector to obtain filter value from the app state.
- * @param {object} state Global app state. 
- * @returns {callback} Filter selector function.
+ * Selector to obtain filter value.
+ * @param {object} state Global app state.
+ * @returns {func} Filter value selector.
  */
-export const getFilter = state => state.filter;
+export const selectFilter = state => state.filter;

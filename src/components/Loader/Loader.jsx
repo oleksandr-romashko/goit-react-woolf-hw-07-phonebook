@@ -1,4 +1,5 @@
-import { LoaderWrapper, DotWrapper, Dot } from "./Loader.style";
+import Spinner from "./Spinner";
+import { LoaderWrapper } from "./Loader.styled";
 
 /**
  * Loader component.
@@ -8,11 +9,7 @@ const Loader = () => {
   return (
     <LoaderWrapper>
       Loading
-      <DotWrapper>
-        <Dot data-delay="0s" />
-        <Dot data-delay=".1s" />
-        <Dot data-delay=".2s" />
-      </DotWrapper>
+      <Spinner />
     </LoaderWrapper>
   )
 }
