@@ -19,7 +19,7 @@ export const Backdrop = styled('div')({
 /**
  * Modal window with content.
  */
-export const ModalContent = styled('div')({
+export const Modal = styled('div')({
   position: 'fixed',
   zIndex: 1000,
   top: 'calc(50% + 16px)',
@@ -42,7 +42,48 @@ export const ModalContent = styled('div')({
     maxWidth: '600px',
   },
 
-  '#modal-disclaimer-portal &': {
+  '#modal-portal &': {
     overflowY: 'scroll',
+  },
+});
+
+export const ModalContainer = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
+  rowGap: '12px',
+  padding: '24px 40px',
+  fontSize: '14px',
+  lineHeight: '18px',
+  fontWeight: '300',
+  '@media screen and (min-width: 576px)': {
+    rowGap: '16px',
+    fontSize: '18px',
+    lineHeight: '24px',
+  },
+  '@media screen and (min-width: 1200px)': {
+    rowGap: '18px',
+    fontSize: '18px',
+    lineHeight: '24px',
+    fontWeight: '400',
+  },
+});
+
+export const Title = styled('h2')({
+  marginTop: '8px',
+  marginBottom: '6px',
+  textAlign: 'center',
+  fontWeight: 700,
+  fontSize: '18px',
+  lineHeight: '18px',
+  '@media screen and (min-width: 576px)': {
+    marginTop: '16px',
+    marginBottom: '10px',
+    fontSize: '22px',
+    lineHeight: '22px',
+  },
+  '@media screen and (min-width: 1200px)': {
+    marginTop: '18px',
+    fontSize: '24px',
+    lineHeight: '24px',
   },
 });
