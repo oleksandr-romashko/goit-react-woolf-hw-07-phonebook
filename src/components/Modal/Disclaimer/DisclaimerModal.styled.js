@@ -129,11 +129,5 @@ export const ShowImportantInfoForm = styled('form')({
       width: 'fit-content',
       fontSize: 'inherit',
     },
-    '@media screen and (min-width: 1200px)': {
-      marginLeft: 'auto',
-      marginRight: 'auto',
-      width: 'fit-content',
-      fontSize: 'inherit',
-    },
   },
 });
