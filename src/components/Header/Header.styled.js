@@ -13,11 +13,17 @@ const Header = styled('header')({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'flex-end',
-  fontSize: '64px',
+  fontSize: '48px',
+  lineHeight: '52px',
   fontWeight: '600',
   color: 'var(--color-basic-white)',
   textAlign: 'center',
   backgroundColor: 'var(--color-basic-black)',
+
+  '@media screen and (min-width: 576px)': {
+    fontSize: '52px',
+    lineHeight: '64px',
+  },
 });
 
 export default Header;

@@ -9,26 +9,40 @@ export const Wrapper = styled('main')({
   paddingRight: '8px',
   display: 'flex',
   flexDirection: 'column',
-  rowGap: '48px',
+  rowGap: '28px',
 
   color: 'var(--color-basic-black)',
   fontStyle: 'normal',
+
+  '@media screen and (min-width: 576px)': {
+    rowGap: '48px',
+  },
 });
 
 /**
  * Main title text.
  */
 export const Title = styled('h1')({
-  fontSize: '56px',
+  fontSize: '40px',
+  lineHeight: '40px',
   fontWeight: 700,
-  lineHeight: '56px',
+
+  '@media screen and (min-width: 576px)': {
+    fontSize: '48px',
+    lineHeight: '48px',
+  },
 });
 
 /**
  * Secondary text for main parts separation.
  */
 export const Subtitle = styled('h1')({
-  fontSize: '42px',
+  fontSize: '32px',
+  lineHeight: '32px',
   fontWeight: 600,
-  lineHeight: '44px',
+
+  '@media screen and (min-width: 576px)': {
+    fontSize: '40px',
+    lineHeight: '40px',
+  },
 });

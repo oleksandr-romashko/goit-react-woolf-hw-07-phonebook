@@ -7,9 +7,13 @@ export const List = styled('ul')({
   display: 'list-item',
   boxSizing: 'border-box',
   maxWidth: '625px',
-  marginLeft: '52px',
+  marginLeft: '32px',
   marginRight: '12px',
   listStyleType: 'disc',
+
+  '@media screen and (min-width: 576px)': {
+    marginLeft: '52px',
+  },
 });
 
 /**
@@ -18,29 +22,44 @@ export const List = styled('ul')({
 export const Item = styled('li')({
   width: '100%',
   '&:not(:last-child) ': {
-    marginBottom: '32px',
+    marginBottom: '4px',
   },
+  '@media screen and (min-width: 576px)': {
+    '&:not(:last-child) ': {
+      marginBottom: '16px',
+    },
+  },
+
   '& > div': {
     width: '100%',
     display: 'flex',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    columnGap: '16px',
+    columnGap: '12px',
     '@media screen and (min-width: 576px)': {
       columnGap: '24px',
     },
   },
   '& > div > p': {
+    flexGrow: 1,
     display: 'flex',
-    rowGap: '8px',
+    justifyContent: 'space-between',
+    rowGap: '4px',
     flexWrap: 'wrap',
-    fontSize: '22px',
+    fontSize: '18px',
+    lineHeight: '20px',
     '@media screen and (min-width: 420px)': {
-      fontSize: '28px',
+      fontSize: '22px',
+      lineHeight: '22px',
     },
     '@media screen and (min-width: 576px)': {
-      fontSize: '32px',
+      fontSize: '24px',
+      lineHeight: '26px',
     },
+    '@media screen and (min-width: 768px)': {
+      fontSize: '28px',
+      lineHeight: '32px',
+    },
+
     '& > a': {
       color: 'var(--color-accent-blue-dark)',
       outlineOffset: '4px',
@@ -51,6 +70,7 @@ export const Item = styled('li')({
       },
     },
   },
+
   '& button': {
     minWidth: '100px',
     minHeight: '36px',
