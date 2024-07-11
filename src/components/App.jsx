@@ -1,14 +1,17 @@
 import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Page from 'components/Page/Page.styled';
-import Header from 'components/Header/Header.styled';
-import HeaderIconsWrapper from './Header/HeaderIcons.styled';
-import Phonebook from 'components/Phonebook/Phonebook';
-import DisclaimerModal from './Modal/DisclaimerModal';
+
 import { selectDoNotShowDisclaimerAgain } from 'store/persistent/selectors';
 import { selectIsDisclaimerModalOpen } from 'store/modals/selectors';
 import { setIsDisclaimerModalOpen } from 'store/modals/slice';
+
+import Page from 'components/Page/Page.styled';
+import Header from 'components/Header/Header.styled';
+import HeaderControls from './Header/HeaderControls.styled';
+import Phonebook from 'components/Phonebook/Phonebook';
+import DisclaimerModal from './Modal/DisclaimerModal';
+import UserProfileButton from './Button/UserProfileButton';
 
 /**
  * Contact Book application component.
@@ -30,15 +33,15 @@ const App = () => {
   return (
     <>
       <Page>
-        <Header>
-          <p>Contact Book</p>
-          <HeaderIconsWrapper>
-            {/* <LocalStorageIcon fill='var(--color-basic-white)' /> */}
-          </HeaderIconsWrapper>
-        </Header>
         <ErrorBoundary>
-          <Phonebook />
-        </ErrorBoundary>
+          <Header>
+            <p>Contact Book</p>
+            <HeaderControls>
+              <UserProfileButton />
+            </HeaderControls>
+          </Header>
+            <Phonebook />
+          </ErrorBoundary>
       </Page>
       {isDisclaimerModalOpen && <DisclaimerModal />}
     </>

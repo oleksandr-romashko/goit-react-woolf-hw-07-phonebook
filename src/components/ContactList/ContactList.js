@@ -13,7 +13,7 @@ import { selectFilter } from 'store/filter/selectors';
 import { fetchContacts, deleteContactById } from 'store/contacts/operations';
 import textToNormalizedWordsArray from 'components/helpers/textToNormalizedWordsArray';
 
-import Button from 'components/Button/Button.styled';
+import Button from 'components/Button/BasicButton.styled';
 import { List, Item, InfoText } from './ContactList.styled';
 import Loader from 'components/Loader/Loader';
 import { sortAsc } from 'helpers/sort';

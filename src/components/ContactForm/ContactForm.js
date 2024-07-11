@@ -15,7 +15,7 @@ import {
 import { addContact } from 'store/contacts/operations';
 
 import Input from 'components/Input/Input.styled';
-import Button from 'components/Button/Button.styled';
+import Button from 'components/Button/BasicButton.styled';
 import Spinner from 'components/Loader/Spinner';
 import { Form, Label, AddButtonWrapper, InfoText } from './ContactForm.styled';
 import { useEffect } from 'react';
