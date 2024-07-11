@@ -42,6 +42,7 @@ export const Item = styled('li')({
   '& > div > p': {
     flexGrow: 1,
     display: 'flex',
+    flexDirection: 'column',
     justifyContent: 'space-between',
     rowGap: '4px',
     flexWrap: 'wrap',
@@ -52,6 +53,7 @@ export const Item = styled('li')({
       lineHeight: '22px',
     },
     '@media screen and (min-width: 576px)': {
+      flexDirection: 'row',
       fontSize: '24px',
       lineHeight: '26px',
     },
