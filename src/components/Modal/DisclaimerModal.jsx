@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { setShowDisclaimer } from 'store/persistent/slice';
 
 import Modal from './Modal';
-import Button from 'components/Button/Button.styled';
+import Button from 'components/Button/BasicButton.styled';
 import { ImportantNotes, Title, Info, ShowImportantInfoForm } from './DisclaimerModal.styled';
 import { setIsDisclaimerModalOpen } from 'store/modals/slice';
 import Icon from 'components/Icon/Icon';
@@ -31,6 +31,14 @@ const DisclaimerModal = () => {
         <p>This application was created for testing purposes and cannot guarantee that your data is safe and secure.</p>
         <p>As it is only a front-end app using a free test mock back-end API, it is not possible to provide an adequate or appropriate level of data security. All data shared with this app should be considered non-private and potentially publicly available.</p>
         <p>You use this application at your own risk and provide your data voluntarily, understanding all the associated risks.</p>
+      </Info>
+      <Info>
+        <h3>
+          <Icon name='cross-platform' className='disclaimer-icon' />
+          Contacts Sharing Functionality Across Devices
+        </h3>
+        <p>To share contacts and have access to them on multiple devices, you may set or change a unique user identifier in your profile settings.</p>
+        <p>Otherwise, each device (browser application) will obtain its own unique user identifier, and you will see only the contacts related to that identifier.</p>
       </Info>
       <Info>
         <h3>
