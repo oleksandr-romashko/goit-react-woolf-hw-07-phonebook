@@ -75,6 +75,7 @@ export const Info = styled('article')({
       width: '14px',
       height: '14px',
       fill: 'none',
+      stroke: 'currentcolor',
 
       '@media screen and (min-width: 576px)': {
         left: '-25px',

@@ -25,7 +25,7 @@ const DisclaimerModal = () => {
       <Title>Important App Notes</Title>
       <Info>
         <h3>
-            <Icon name='important' className='disclaimer-icon important-icon' />
+            <Icon name='important' className='disclaimer-icon' />
             State of Development and Personal Data Protection
         </h3>
         <p>This application was created for testing purposes and cannot guarantee that your data is safe and secure.</p>
@@ -34,7 +34,7 @@ const DisclaimerModal = () => {
       </Info>
       <Info>
         <h3>
-          <Icon name='idea' className='disclaimer-icon idea-icon' />
+          <Icon name='idea' className='disclaimer-icon' />
           Feedback
         </h3>
         <p>
