@@ -10,6 +10,8 @@ export const Backdrop = styled('div')({
   left: 0,
   right: 0,
   bottom: 0,
+  width: '100vw',
+  height: '100vh',
   backgroundColor: 'rgba(0, 0, 0, .7)',
   backdropFilter: 'blur(10px)',
 });
