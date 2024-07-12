@@ -1,15 +1,17 @@
+import Icon from 'components/Icon/Icon';
 import { Cause, FallbackWrapper, Tips } from './FallBackUI.styled';
-import { FallbackIcon } from 'components/Icons';
 
 /**
  * Fallback message in ase of app error.
- * @param {Error} props.error Thrown error. 
+ * @param {Error} props.error Thrown error.
  * @returns {JSX.Element} Rendered fallback component.
  */
 const FallBackUI = ({ error }) => (
   <FallbackWrapper>
-    <FallbackIcon fill="black" width="200px" height="200px" />
-    <h1>Aaaah! Sorry, but something went wrong :(</h1>
+    <Icon name="notepad" className="notepad-icon" />
+    <h1>
+      Aaaah! Sorry, but something went wrong <span className="no-wrap">:(</span>
+    </h1>
     <Tips>
       <p>From now on, you may have to use pen and paper.</p>
       <p>But don't worry, you may also refresh the page or try again later.</p>
@@ -26,12 +28,10 @@ const FallBackUI = ({ error }) => (
         .
       </p>
     </Tips>
-    {error && (
-      <Cause>
-        <summary>Details</summary>
-        <code>{error.stack}</code>
-      </Cause>
-    )}
+    <Cause>
+      <summary>Details</summary>
+      <code>dsadsd</code>
+    </Cause>
   </FallbackWrapper>
 );
 

@@ -7,17 +7,62 @@ export const FallbackWrapper = styled('div')({
   alignItems: 'center',
   textAlign: 'center',
 
-  '& > h1': {
-    marginTop: '32px',
-    fontSize: '28px',
-  },
+  fontSize: '16px',
+  lineHeight: '20px',
 
-  '& p': {
+  '@media screen and (min-width: 420px)': {
+    fontSize: '18px',
+    lineHeight: '22px',
+  },
+  '@media screen and (min-width: 576px)': {
     fontSize: '20px',
+    lineHeight: '24px',
+  },
+  '@media screen and (min-width: 768px)': {
+    fontSize: '22px',
+    lineHeight: '24px',
   },
 
-  '& p:last-child': {
-    fontSize: '16px',
+  '& .notepad-icon': {
+    width: '140px',
+    height: '140px',
+    '@media screen and (min-width: 420px)': {
+      width: '160px',
+      height: '160px',
+    },
+    '@media screen and (min-width: 576px)': {
+      width: '180px',
+      height: '180px',
+    },
+    '@media screen and (min-width: 768px)': {
+      width: '200px',
+      height: '200px',
+    },
+  },
+
+  '& h1': {
+    marginTop: '20px',
+    fontSize: '18px',
+    lineHeight: '24px',
+    '@media screen and (min-width: 420px)': {
+      marginTop: '24px',
+      fontSize: '22px',
+      lineHeight: '28px',
+    },
+    '@media screen and (min-width: 576px)': {
+      marginTop: '28px',
+      fontSize: '24px',
+      lineHeight: '28px',
+    },
+    '@media screen and (min-width: 768px)': {
+      marginTop: '30px',
+      fontSize: '28px',
+      lineHeight: '28px',
+    },
+
+    '& .no-wrap': {
+      whiteSpace: 'nowrap',
+    },
   },
 
   '& a': {
@@ -35,29 +80,92 @@ export const FallbackWrapper = styled('div')({
 });
 
 export const Tips = styled('div')({
-  marginTop: '40px',
+  marginTop: '24px',
+
   '& p:not(:first-child)': {
-    marginTop: '16px',
+    marginTop: '2px',
+    '@media screen and (min-width: 420px)': {
+      marginTop: '8px',
+    },
+    '@media screen and (min-width: 576px)': {
+      marginTop: '12px',
+    },
+    '@media screen and (min-width: 768px)': {},
+  },
+
+  '& p:last-child': {
+    marginTop: '24px',
+    fontSize: '14px',
+    lineHeight: '16px',
+
+    '@media screen and (min-width: 420px)': {
+      fontSize: '16px',
+      lineHeight: '16px',
+    },
+    '@media screen and (min-width: 576px)': {
+      marginTop: '32px',
+      fontSize: '18px',
+      lineHeight: '18px',
+    },
+    '@media screen and (min-width: 768px)': {
+      marginTop: '36px',
+      fontSize: '20px',
+      lineHeight: '20px',
+    },
   },
 });
 
 export const Cause = styled('details')({
-  maxWidth: '100%',
-  width: '800px',
-  marginTop: '48px',
-  fontSize: '20px',
+  marginLeft: 'auto',
+  marginRight: 'auto',
+  maxWidth: '640px',
+  width: '100%',
   textAlign: 'left',
   cursor: 'pointer',
 
+  marginTop: '24px',
+  fontSize: '14px',
+  lineHeight: '16px',
+
+  '@media screen and (min-width: 420px)': {
+    marginTop: '28px',
+    fontSize: '16px',
+    lineHeight: '16px',
+  },
+  '@media screen and (min-width: 576px)': {
+    marginTop: '32px',
+    fontSize: '18px',
+    lineHeight: '18px',
+  },
+  '@media screen and (min-width: 768px)': {
+    marginTop: '36px',
+    fontSize: '20px',
+    lineHeight: '20px',
+  },
+
   '& > code': {
-    maxWidth: '100%',
-    display: 'inline-block',
-    margin: '12px 24px',
-    padding: '24px',
+    display: 'block',
     borderRadius: '5px',
-    fontSize: '14px',
     color: 'var(--color-pure-white)',
-    background: '#30353b',
+    backgroundColor: 'var(--color-code-snippet-background)',
     boxShadow: '1px 1px 2px #bbbbbb',
+
+    margin: '4px 16px',
+    padding: '16px 14px',
+    fontSize: '10px',
+    lineHeight: '12px',
+
+    '@media screen and (min-width: 420px)': {
+      margin: '6px 18px',
+      padding: '18px 14px',
+      fontSize: '12px',
+      lineHeight: '12px',
+    },
+    '@media screen and (min-width: 576px)': {
+      margin: '8px 18px',
+    },
+    '@media screen and (min-width: 768px)': {
+      margin: '8px 20px',
+    },
   },
 });

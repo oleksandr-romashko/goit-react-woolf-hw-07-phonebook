@@ -4,6 +4,7 @@ import { IdeaIcon } from "./IdeaIcon";
 import { UserProfileIcon } from "./UserProfileIcon";
 import { CloseIcon } from "./CloseIcon";
 import { QuestionMarkIcon } from "./QuestionMarkIcon";
+import { NotepadIcon } from "./NotepadIcon";
 
 export const ICON_DEFAULT = Object.freeze({
   WIDTH: '14',
@@ -18,6 +19,7 @@ const Icon = props => {
     case 'user-profile': return <UserProfileIcon {...props} />
     case 'cross': return <CloseIcon {...props} />
     case 'question-mark': return <QuestionMarkIcon {...props} />
+    case 'notepad': return <NotepadIcon {...props} />
     default: return <QuestionMarkIcon {...props} />;
   }
 };
