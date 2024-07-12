@@ -29,27 +29,27 @@ const UserProfileModal = () => {
         <div>
           <p>User identifier</p>
           <div>
-            <input type='text'></input>
+            <input name='user-id' type='text'></input>
             <Icon name='important' stroke='currentcolor' />
             <Icon name='cross' stroke='currentcolor' />
             <Icon name='cross-platform' stroke='currentcolor' />
             <Icon name='user-profile' stroke='currentcolor' />
           </div>
           <label>
-            <input type='checkbox' />
+            <input name='remove-previous-data' type='checkbox' />
             Remove all my previously created data after switching account
           </label>
         </div>
         <div>
           <p>Verification key</p>
           <div>
-            <input type='password' autoComplete="off" />
+            <input name='user-key' type='password' autoComplete="off" />
             <Icon name='cross' stroke='currentcolor' />
           </div>
         </div>
       </form>
       <label>
-            <input type='checkbox' />
+            <input name='do-not-show-checkbox' type='checkbox' />
             Do not show info message and disclaimer at start
           </label>
       <div>
