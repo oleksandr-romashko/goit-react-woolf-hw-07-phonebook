@@ -1,9 +1,11 @@
+import { ICON_DEFAULT } from './Icon';
+
 const ImportantIcon = ({ className, fill, height, stroke, width }) => {
   return (
     <svg
       className={className}
-      width={width || '14'}
-      height={height || '14'}
+      width={width || ICON_DEFAULT.WIDTH}
+      height={height || ICON_DEFAULT.HEIGHT}
       viewBox="0 0 14 14"
       fill={fill}
       xmlns="http://www.w3.org/2000/svg"
