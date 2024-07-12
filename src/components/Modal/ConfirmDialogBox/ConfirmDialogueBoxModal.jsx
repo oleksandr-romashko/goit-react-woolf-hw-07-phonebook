@@ -29,6 +29,7 @@ const ConfirmDialogueBoxModal = (
     onRefuse,
     onCancel,
     onCloseBtnClick,
+    onBackdropClick,
     title = !onRefuse ? 'Thank you!' : 'Are you sure?',
     message,
     confirmText = !onRefuse ? 'Ok' : 'Yes',
@@ -60,7 +61,12 @@ const ConfirmDialogueBoxModal = (
   }, [onCloseBtnClick])
 
   return ReactDom.createPortal(
-    <Modal className='confirm-dialogue-box-modal' title={title} onCloseBtnClick={onCloseBtnClick}>
+    <Modal
+      className='confirm-dialogue-box-modal'
+      title={title}
+      onCloseBtnClick={onCloseBtnClick}
+      onBackdropClick={onBackdropClick}
+    >
       {message && <p>{message}</p>}
       <ButtonsWrapper>
         <Button className={confirmBtnStyle} onClick={onConfirm}>
