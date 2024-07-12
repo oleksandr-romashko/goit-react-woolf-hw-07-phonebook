@@ -13,6 +13,13 @@ export const ButtonsWrapper = styled('div')({
     },
   },
 
+  '.confirm-dialogue-box-modal:has(&) p': {
+    textAlign: 'center',
+    '&:not(:first-child)': {
+      marginTop: '4px',
+    },
+  },
+
   marginTop: '8px',
   display: 'flex',
   justifyContent: 'center',

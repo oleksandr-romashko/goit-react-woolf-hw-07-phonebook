@@ -15,6 +15,7 @@ import Modal from '../Modal';
  * @param {callback} props.onBackdropClick Function to handle click on modal backdrop.
  * @param {string} props.title Title text.
  * @param {string} props.message Message text.
+ * @param {string} props.details Additional text for details.
  * @param {string} props.confirmText Confirm button text.
  * @param {string} props.refuseText Refuse button text.
  * @param {string} props.cancelText Cancel button text.
@@ -34,6 +35,7 @@ const ConfirmDialogueBoxModal = (
     onBackdropClick,
     title = !onRefuse ? 'Thank you!' : 'Are you sure?',
     message,
+    details,
     confirmText = !onRefuse ? 'Ok' : 'Yes',
     refuseText = 'No',
     cancelText = 'Cancel',
@@ -52,7 +54,10 @@ const ConfirmDialogueBoxModal = (
       onEscapeKeyPress={onEscapeKeyPress}
       onBackdropClick={onBackdropClick}
     >
-      {message && <p>{message}</p>}
+      <div>
+        {message && <p className='modal-message'>{message}</p>}
+        {details && <p className='modal-details'>{details}</p>}
+      </div>
       <ButtonsWrapper>
         <Button className={confirmBtnStyle} onClick={onConfirm} autoFocus>
           {confirmText}
@@ -77,6 +82,7 @@ ConfirmDialogueBoxModal.propTypes = {
   calledOnId: PropTypes.string,
   title: PropTypes.string,
   message: PropTypes.string.isRequired,
+  details: PropTypes.string,
   confirmText: PropTypes.string,
   refuseText: PropTypes.string,
   cancelText: PropTypes.string,

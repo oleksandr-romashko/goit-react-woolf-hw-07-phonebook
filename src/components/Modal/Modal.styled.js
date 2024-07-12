@@ -74,6 +74,12 @@ export const ModalContainer = styled('div')({
       transform: 'scale(1.2)',
     },
 
+    '&:active': {
+      border: 'unset',
+      background: 'unset',
+      outline: 'unset',
+    },
+
     '& .close-icon': {
       width: '24px',
       height: '24px',

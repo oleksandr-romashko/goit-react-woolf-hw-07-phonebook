@@ -44,7 +44,7 @@ const ContactList = () => {
   const error = useSelector(selectError);
   const isDeleteError = useSelector(selectIsDeleteError);
   const filter = useSelector(selectFilter);
-  const { isDialogueBoxModalOpen, deleteId } = useSelector(
+  const { isDialogueBoxModalOpen, deleteId, deleteName } = useSelector(
     selectDialogueBoxModal
   );
   const dispatch = useDispatch();
@@ -87,10 +87,14 @@ const ContactList = () => {
     if (event.target.nodeName === 'BUTTON') {
       const contactItem = event.target.closest('li');
       const deleteId = Number(contactItem.dataset.id);
+      let innerText = contactItem.querySelector('.contact-name').innerText;
+      const deleteName = innerText.slice(0, -2);
+
       if (event.target === document.activeElement) {
         event.target.blur();
       }
-      dispatch(showDialogueBoxModal(deleteId));
+
+      dispatch(showDialogueBoxModal({ deleteId, deleteName }));
     }
   };
 
@@ -138,7 +142,8 @@ const ContactList = () => {
           onEscapeKeyPress={handleCloseDialogueBoxModal}
           onBackdropClick={handleCloseDialogueBoxModal}
           title=""
-          message="Are you sure you want to delete this contact?"
+          message={'Are you sure you want to delete'}
+          details={`${deleteName}?`}
           confirmText="Yes, delete"
           cancelText="Cancel"
           confirmBtnStyle={BUTTON_STYLE.ACCENT_BLUE}
