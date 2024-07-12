@@ -12,7 +12,7 @@ export const List = styled('ul')({
   listStyleType: 'disc',
 
   '@media screen and (min-width: 576px)': {
-    marginLeft: '52px',
+    marginLeft: '40px',
   },
 });
 
@@ -22,11 +22,16 @@ export const List = styled('ul')({
 export const Item = styled('li')({
   width: '100%',
   '&:not(:last-child) ': {
-    marginBottom: '4px',
+    marginBottom: '6px',
+  },
+  '@media screen and (min-width: 420px)': {
+    '&:not(:last-child) ': {
+      marginBottom: '8px',
+    },
   },
   '@media screen and (min-width: 576px)': {
     '&:not(:last-child) ': {
-      marginBottom: '16px',
+      marginBottom: '10px',
     },
   },
 
@@ -46,23 +51,25 @@ export const Item = styled('li')({
     justifyContent: 'space-between',
     rowGap: '4px',
     flexWrap: 'wrap',
-    fontSize: '18px',
-    lineHeight: '20px',
+    fontSize: '16px',
+    lineHeight: '16px',
+
     '@media screen and (min-width: 420px)': {
-      fontSize: '22px',
-      lineHeight: '22px',
+      flexDirection: 'row',
+      fontSize: '18px',
+      lineHeight: '18px',
     },
     '@media screen and (min-width: 576px)': {
-      flexDirection: 'row',
-      fontSize: '24px',
-      lineHeight: '26px',
+      fontSize: '18px',
+      lineHeight: '18px',
     },
     '@media screen and (min-width: 768px)': {
-      fontSize: '26px',
-      lineHeight: '28px',
+      fontSize: '20px',
+      lineHeight: '24px',
     },
 
     '& > a': {
+      minWidth: '132px',
       color: 'var(--color-accent-blue-dark)',
       outlineOffset: '4px',
       border: '1px solid transparent',
@@ -74,10 +81,32 @@ export const Item = styled('li')({
   },
 
   '& button': {
-    minWidth: '125px',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    width: '80px',
+    height: '28px',
+    fontSize: '14px',
+    lineHeight: '14px',
+
+    '@media screen and (min-width: 420px)': {
+      width: '84px',
+      height: '30px',
+      fontSize: '16px',
+      lineHeight: '16px',
+    },
+    '@media screen and (min-width: 576px)': {
+      width: '96px',
+      height: '32px',
+      fontSize: '17px',
+      lineHeight: '17px',
+    },
+    '@media screen and (min-width: 768px)': {
+      width: '104px',
+      height: '34px',
+      fontSize: '18px',
+      lineHeight: '18px',
+    },
   },
 });
 
@@ -85,16 +114,24 @@ export const Item = styled('li')({
  * Informational text about delete operation results.
  */
 export const InfoText = styled('p')({
-  width: '100%',
   maxHeight: '0',
   opacity: '0',
   marginTop: '8px',
   textAlign: 'right',
-  fontSize: '18px',
-  fontWeight: '400',
-  lineHeight: '18px',
+  fontSize: '14px',
+  fontWeight: 400,
+  lineHeight: '14px',
   color: 'red',
   transition: 'opacity 280ms ease-in-out, max-height 480ms ease-in-out',
+
+  '@media screen and (min-width: 420px)': {
+    fontSize: '16px',
+    lineHeight: '16px',
+  },
+  '@media screen and (min-width: 576px)': {
+    marginLeft: '18px',
+  },
+
   '&[data-info-show="true"]': {
     maxHeight: '300px',
     opacity: '1',

@@ -4,12 +4,13 @@ import throttle from 'lodash.throttle';
 import { selectFilter } from '../../store/filter/selectors';
 import { setFilterAction } from 'store/filter/slice';
 
-import { 
-  FilterWrapper, 
-  InputWrapper, 
-  FilterInput, 
-  ClearButton 
+import {
+  FilterWrapper,
+  InputWrapper,
+  FilterInput,
+  ClearButton,
 } from './Filter.styled';
+import Icon from 'components/Icon/Icon';
 
 /**
  * Contacts filter component.
@@ -33,7 +34,7 @@ const Filter = () => {
   const handleFilterClear = () => {
     dispatch(setFilterAction(''));
   };
-  
+
   return (
     <FilterWrapper>
       Find contacts by name
@@ -41,12 +42,18 @@ const Filter = () => {
         <FilterInput
           value={filterText}
           onChange={throttle(handleFilterChange, 150, { trailing: false })}
-          type='text'
-          name='filter'
-          placeholder='Search'
-          title='Search field to filter contact list. Case insensitive.'
+          type="text"
+          name="filter"
+          placeholder="Search"
+          title="Search field to filter contact list. Case insensitive."
         />
-        <ClearButton type='button' onClick={handleFilterClear}>⨯</ClearButton>
+        <ClearButton
+          type="button"
+          onClick={handleFilterClear}
+          aria-label="clear filter"
+        >
+          <Icon />⨯
+        </ClearButton>
       </InputWrapper>
     </FilterWrapper>
   );

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Input from 'components/Input/Input.styled'
+import Input from 'components/Input/Input.styled';
 
 export const FilterWrapper = styled('div')({
   width: 'fit-content',
@@ -15,9 +15,24 @@ export const InputWrapper = styled('div')({
 
 export const FilterInput = styled(Input)({
   paddingRight: '40px',
+  fontSize: '14px',
+  lineHeight: '14px',
   backgroundColor: 'var(--color-pure-white)',
   '&::placeholder': {
     color: 'transparent',
+  },
+
+  '@media screen and (min-width: 420px)': {
+    fontSize: '16px',
+    lineHeight: '16px',
+  },
+  '@media screen and (min-width: 576px)': {
+    fontSize: '17px',
+    lineHeight: '17px',
+  },
+  '@media screen and (min-width: 768px)': {
+    fontSize: '18px',
+    lineHeight: '18px',
   },
 });
 
