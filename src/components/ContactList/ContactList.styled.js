@@ -58,8 +58,8 @@ export const Item = styled('li')({
       lineHeight: '26px',
     },
     '@media screen and (min-width: 768px)': {
-      fontSize: '28px',
-      lineHeight: '32px',
+      fontSize: '26px',
+      lineHeight: '28px',
     },
 
     '& > a': {
@@ -74,8 +74,7 @@ export const Item = styled('li')({
   },
 
   '& button': {
-    minWidth: '100px',
-    minHeight: '36px',
+    minWidth: '125px',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',

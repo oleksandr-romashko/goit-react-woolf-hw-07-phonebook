@@ -10,14 +10,21 @@ import {
   selectIsDeleteError,
 } from 'store/contacts/selectors';
 import { selectFilter } from 'store/filter/selectors';
-import { fetchContacts, deleteContactById } from 'store/contacts/operations';
-import textToNormalizedWordsArray from 'components/helpers/textToNormalizedWordsArray';
+import { selectDialogueBoxModal } from 'store/modals/selectors';
+import {
+  closeDialogueBoxModal,
+  showDialogueBoxModal,
+} from 'store/modals/slice';
+import { deleteContactById, fetchContacts } from 'store/contacts/operations';
 
-import Button from 'components/Button/BasicButton.styled';
-import { List, Item, InfoText } from './ContactList.styled';
-import Loader from 'components/Loader/Loader';
+import textToNormalizedWordsArray from 'components/helpers/textToNormalizedWordsArray';
 import { sortAsc } from 'helpers/sort';
+
+import Button, { BUTTON_STYLE } from 'components/Button/BasicButton.styled';
+import Loader from 'components/Loader/Loader';
 import Spinner from 'components/Loader/Spinner';
+import { List, Item, InfoText } from './ContactList.styled';
+import ConfirmDialogueBoxModal from 'components/Modal/ConfirmDialogBox/ConfirmDialogueBoxModal';
 
 /**
  * Info status messages.
@@ -37,6 +44,9 @@ const ContactList = () => {
   const error = useSelector(selectError);
   const isDeleteError = useSelector(selectIsDeleteError);
   const filter = useSelector(selectFilter);
+  const { isDialogueBoxModalOpen, deleteId } = useSelector(
+    selectDialogueBoxModal
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -68,45 +78,72 @@ const ContactList = () => {
   /**
    * Handles deletion of the contact.
    */
-  const handleDeleteContactOnList = event => {
-    if (event.target.nodeName === 'BUTTON') {
-      const id = Number(event.target.closest('li').dataset.id);
-      dispatch(deleteContactById(id));
+  const handleDeleteContactOnList = () => {
+    dispatch(closeDialogueBoxModal());
+    dispatch(deleteContactById(deleteId));
+  };
 
-      // Remove focus from form submit button
+  const handleShowDialogueBoxModal = event => {
+    if (event.target.nodeName === 'BUTTON') {
+      const contactItem = event.target.closest('li');
+      const deleteId = Number(contactItem.dataset.id);
       if (event.target === document.activeElement) {
         event.target.blur();
       }
+      dispatch(showDialogueBoxModal(deleteId));
     }
   };
 
+  const handleCloseDialogueBoxModal = () => dispatch(closeDialogueBoxModal());
+
   return (
-    <List aria-label="Contacts list" onClick={handleDeleteContactOnList}>
-      {sortedFilteredContacts.map(el => (
-        <Item key={el.id} aria-label="Contact" data-id={el.id}>
-          <div>
-            <p>
-              <span>{el.name}:&nbsp;</span>
-              <a href={`tel:${el.number}`}>{el.number}</a>
-            </p>
-            <Button>
-              {isDeleteLoading && loading.id === Number(el.id) ? (
-                <Spinner />
-              ) : (
-                'Delete'
-              )}
-            </Button>
-          </div>
-          <InfoText
-            data-info-show={isDeleteError && error.contactId === Number(el.id)}
-          >
-            {INFO_DELETE_FAILED}
-            {/* additional error message details */}
-            {/* {isDeleteError && error.contactId === Number(el.id) ? `: ${error.message}.` : '.'} */}
-          </InfoText>
-        </Item>
-      ))}
-    </List>
+    <>
+      <List
+        id="contact-list"
+        onClick={handleShowDialogueBoxModal}
+        aria-label="List of contacts"
+      >
+        {sortedFilteredContacts.map(el => (
+          <Item key={el.id} aria-label="Contact" data-id={el.id}>
+            <div>
+              <p>
+                <span className="contact-name">{el.name}:&nbsp;</span>
+                <a href={`tel:${el.number}`}>{el.number}</a>
+              </p>
+              <Button>
+                {isDeleteLoading && loading.id === Number(el.id) ? (
+                  <Spinner />
+                ) : (
+                  'Delete'
+                )}
+              </Button>
+            </div>
+            <InfoText
+              data-info-show={
+                isDeleteError && error.contactId === Number(el.id)
+              }
+            >
+              {INFO_DELETE_FAILED}
+              {/* additional error message details showed lack of exact useful details for user */}
+              {/* {isDeleteError && error.contactId === Number(el.id) ? `: ${error.message}.` : '.'} */}
+            </InfoText>
+          </Item>
+        ))}
+      </List>
+      {isDialogueBoxModalOpen && (
+        <ConfirmDialogueBoxModal
+          onConfirm={handleDeleteContactOnList}
+          onCancel={handleCloseDialogueBoxModal}
+          onCloseBtnClick={handleCloseDialogueBoxModal}
+          onBackdropClick={handleCloseDialogueBoxModal}
+          title=""
+          message="Are you sure you want to delete this contact?"
+          confirmText="Yes, delete"
+          cancelText="Cancel"
+          confirmBtnStyle={BUTTON_STYLE.ACCENT_BLUE}
+        />
+      )}
+    </>
   );
 };
 

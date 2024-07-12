@@ -13,3 +13,10 @@ export const selectIsDisclaimerModalOpen = state =>
  */
 export const selectIsUserProfileModalOpen = state =>
   state.modals.isUserProfileModalOpen;
+
+/**
+ * Selector for dialogue box.
+ * @param {object} state Global app state.
+ * @returns {func} Dialogue box selector.
+ */
+export const selectDialogueBoxModal = state => state.modals.dialogueBoxModal;

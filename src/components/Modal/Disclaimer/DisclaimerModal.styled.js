@@ -1,16 +1,23 @@
 import styled from 'styled-components';
 
-export const Info = styled('article')({
+export const DisclaimerContainer = styled('div')({
+  width: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  rowGap: '18px',
+  '@media screen and (min-width: 576px)': {
+    rowGap: '24px',
+  },
+});
+
+export const InfoWrapper = styled('article')({
   display: 'flex',
   flexDirection: 'column',
   rowGap: '6px',
-  paddingLeft: '20px',
+  paddingLeft: '24px',
   '@media screen and (min-width: 576px)': {
     rowGap: '10px',
-    paddingLeft: '28px',
-  },
-  '@media screen and (min-width: 1200px)': {
-    paddingLeft: '30px',
+    paddingLeft: '32px',
   },
 
   '& h3': {
@@ -60,13 +67,15 @@ export const Info = styled('article')({
   },
 });
 
-export const ShowImportantInfoForm = styled('form')({
+export const DoNotShowThisModalAgainForm = styled('form')({
   marginTop: '8px',
   display: 'flex',
   flexDirection: 'column',
+  alignItems: 'center',
   rowGap: '18px',
   '@media screen and (min-width: 576px)': {
     marginTop: '0px',
+    alignItems: 'flex-start',
   },
 
   '& label': {
@@ -80,10 +89,10 @@ export const ShowImportantInfoForm = styled('form')({
     },
     '@media screen and (min-width: 576px)': {
       rowGap: '10px',
-      paddingLeft: '28px',
+      paddingLeft: '24px',
     },
     '@media screen and (min-width: 1200px)': {
-      paddingLeft: '30px',
+      paddingLeft: '32px',
     },
   },
 
