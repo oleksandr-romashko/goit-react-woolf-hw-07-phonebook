@@ -52,7 +52,7 @@ const Filter = () => {
           onClick={handleFilterClear}
           aria-label="clear filter"
         >
-          <Icon />⨯
+          <Icon name="cross" className="clear-btn-icon" />
         </ClearButton>
       </InputWrapper>
     </FilterWrapper>
