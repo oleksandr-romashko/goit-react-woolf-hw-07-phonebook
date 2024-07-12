@@ -56,13 +56,13 @@ export const ModalContainer = styled('div')({
     overflowY: 'scroll',
   },
 
-  '& > .close-modal-btn': {
-    boxSizing: 'content-box',
+  '& .close-modal-btn': {
     position: 'absolute',
-    top: '12px',
-    right: '12px',
-    padding: '4px',
+    top: '14px',
+    right: '16px',
+    padding: 0,
     width: '30px',
+    minWidth: 'unset',
     height: '30px',
     borderRadius: '50%',
     borderColor: 'transparent',
@@ -75,9 +75,8 @@ export const ModalContainer = styled('div')({
     },
 
     '& .close-icon': {
-      padding: '4px',
-      width: '100%',
-      height: '100%',
+      width: '24px',
+      height: '24px',
       stroke: 'currentcolor',
     },
   },
