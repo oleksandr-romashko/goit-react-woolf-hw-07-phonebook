@@ -10,7 +10,7 @@ export const Form = styled('form')(props => {
     maxWidth: '677px',
     display: 'flex',
     flexDirection: 'column',
-    padding: '40px 18px 14px 18px',
+    padding: '32px 18px 8px 18px',
     alignItems: 'flex-start',
     rowGap: '18px',
     border: '2px solid #212121',
@@ -27,28 +27,16 @@ export const Form = styled('form')(props => {
     '& button': {
       minWidth: '120px',
       width: '120px',
-      height: '28px',
-      fontSize: '14px',
-      lineHeight: '14px',
 
       '@media screen and (min-width: 420px)': {
         minWidth: '128px',
         width: '128px',
-        height: '30px',
-        fontSize: '16px',
-        lineHeight: '16px',
       },
       '@media screen and (min-width: 576px)': {
         minWidth: '144px',
-        height: '32px',
-        fontSize: '17px',
-        lineHeight: '17px',
       },
       '@media screen and (min-width: 768px)': {
         minWidth: '156px',
-        height: '34px',
-        fontSize: '18px',
-        lineHeight: '18px',
       },
     },
   };
@@ -118,7 +106,7 @@ export const InfoText = styled('span')({
   marginTop: '12px',
   maxHeight: '0',
   opacity: '0',
-  fontSize: '14px',
+  fontSize: '13px',
   fontWeight: 400,
   lineHeight: '14px',
   transition: 'opacity 480ms ease-in-out, max-height 480ms ease-in-out',

@@ -39,7 +39,7 @@ export const Item = styled('li')({
     width: '100%',
     display: 'flex',
     alignItems: 'center',
-    columnGap: '12px',
+    columnGap: '10px',
     '@media screen and (min-width: 576px)': {
       columnGap: '24px',
     },
@@ -56,8 +56,8 @@ export const Item = styled('li')({
 
     '@media screen and (min-width: 420px)': {
       flexDirection: 'row',
-      fontSize: '18px',
-      lineHeight: '18px',
+      fontSize: '15px',
+      lineHeight: '15px',
     },
     '@media screen and (min-width: 576px)': {
       fontSize: '18px',
@@ -65,47 +65,22 @@ export const Item = styled('li')({
     },
     '@media screen and (min-width: 768px)': {
       fontSize: '20px',
-      lineHeight: '24px',
+      lineHeight: '20px',
     },
 
     '& > a': {
-      minWidth: '132px',
+      minWidth: '106px',
       color: 'var(--color-accent-blue-dark)',
       outlineOffset: '4px',
       border: '1px solid transparent',
       whiteSpace: 'nowrap',
+      '@media screen and (min-width: 576px)': {
+        marginRight: '24px',
+      },
+
       '&:hover, &:focus': {
         textDecoration: 'underline',
       },
-    },
-  },
-
-  '& button': {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '80px',
-    height: '28px',
-    fontSize: '14px',
-    lineHeight: '14px',
-
-    '@media screen and (min-width: 420px)': {
-      width: '84px',
-      height: '30px',
-      fontSize: '16px',
-      lineHeight: '16px',
-    },
-    '@media screen and (min-width: 576px)': {
-      width: '96px',
-      height: '32px',
-      fontSize: '17px',
-      lineHeight: '17px',
-    },
-    '@media screen and (min-width: 768px)': {
-      width: '104px',
-      height: '34px',
-      fontSize: '18px',
-      lineHeight: '18px',
     },
   },
 });

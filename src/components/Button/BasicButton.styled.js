@@ -8,8 +8,10 @@ export const BUTTON_STYLE = Object.freeze({
 
 const Button = styled('button')({
   position: 'relative',
-  display: 'inline-flex',
-  padding: '6px 16px',
+  display: 'flex',
+  minWidth: '80px',
+  width: '80px',
+  height: '28px',
   justifyContent: 'center',
   alignItems: 'center',
 
@@ -30,18 +32,23 @@ const Button = styled('button')({
   'user-select': 'none' /* Standard syntax */,
 
   '@media screen and (min-width: 420px)': {
-    padding: '6px 16px',
-    fontSize: '16px',
-    lineHeight: '16px',
+    minWidth: '84px',
+    width: '84px',
+    height: '30px',
+    fontSize: '15px',
+    lineHeight: '15px',
   },
   '@media screen and (min-width: 576px)': {
-    padding: '6px 18px',
-    fontSize: '18px',
-    lineHeight: '18px',
+    minWidth: '96px',
+    height: '32px',
+    fontSize: '17px',
+    lineHeight: '17px',
   },
   '@media screen and (min-width: 768px)': {
-    fontSize: '20px',
-    lineHeight: '20px',
+    minWidth: '104px',
+    height: '34px',
+    fontSize: '18px',
+    lineHeight: '18px',
   },
 
   '&:hover': {
