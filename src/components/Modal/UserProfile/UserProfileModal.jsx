@@ -37,22 +37,21 @@ const UserProfileModal = () => {
           </div>
           <label>
             <input type='checkbox' />
-            Do not show info message and disclaimer at start
-          </label>
-          <label>
-            <input type='checkbox' />
             Remove all my previously created data after switching account
           </label>
         </div>
         <div>
           <p>Verification key</p>
           <div>
-            <input type='password' />
+            <input type='password' autoComplete="off" />
             <Icon name='cross' stroke='currentcolor' />
           </div>
         </div>
       </form>
-      
+      <label>
+            <input type='checkbox' />
+            Do not show info message and disclaimer at start
+          </label>
       <div>
         <p>Danger zone</p>
         <button type='button'>Remove all my data</button>
