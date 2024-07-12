@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import {
@@ -18,7 +19,6 @@ import Input from 'components/Input/Input.styled';
 import Button from 'components/Button/BasicButton.styled';
 import Spinner from 'components/Loader/Spinner';
 import { Form, Label, AddButtonWrapper, InfoText } from './ContactForm.styled';
-import { useEffect } from 'react';
 
 /**
  * Info status messages.
