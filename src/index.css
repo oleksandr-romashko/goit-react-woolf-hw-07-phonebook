@@ -7,6 +7,10 @@
   --color-pure-white: #fff;
   --color-accent-blue-light: rgba(124, 168, 225, 0.8);
   --color-accent-blue-dark: #2764bb;
+  --color-accent-red-light: #ffe9d9;
+  --color-accent-red-normal: #de303f;
+  --color-accent-red-dark: #bc4c2e;
+  --color-accent-red-darkest: #771505;
 }
 
 body {
