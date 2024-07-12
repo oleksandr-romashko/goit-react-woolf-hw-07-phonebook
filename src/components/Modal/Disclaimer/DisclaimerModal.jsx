@@ -13,6 +13,12 @@ import {
   DoNotShowThisModalAgainForm,
 } from './DisclaimerModal.styled';
 
+/**
+ * Modal containing useful information.
+ * Allows to skip and not to show modal again by checking an appropriate checkbox.
+ * Data about checked status stored in the Local Storage.
+ * @returns {JSX.Element} Rendered disclaimer modal component.
+ */
 const DisclaimerModal = () => {
   const dispatch = useDispatch();
   

@@ -7,12 +7,17 @@ import {
   ModalContentWrapper,
 } from "./Modal.styled";
 
-const Modal = ({ title, children, onCloseBtnClick, onBackdropClick, className }) => {
+/**
+ * 
+ * @param {*} param0 
+ * @returns 
+ */
+const Modal = ({ title, children, onCloseBtnClick, onEscapeKeyPress, onBackdropClick, className }) => {
   useEffect(() => {
-    if (onCloseBtnClick) {
+    if (onEscapeKeyPress) {
       const handleKeyPress = event => {
         if (event.code === "Escape") {
-          onCloseBtnClick();
+          onEscapeKeyPress();
         }
       };
       window.addEventListener("keyup", handleKeyPress);
@@ -21,7 +26,7 @@ const Modal = ({ title, children, onCloseBtnClick, onBackdropClick, className })
         window.removeEventListener("keyup", handleKeyPress);
       };
     }
-  }, [onCloseBtnClick])
+  }, [onEscapeKeyPress])
 
   return (
     <>

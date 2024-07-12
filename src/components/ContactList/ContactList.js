@@ -135,6 +135,7 @@ const ContactList = () => {
           onConfirm={handleDeleteContactOnList}
           onCancel={handleCloseDialogueBoxModal}
           onCloseBtnClick={handleCloseDialogueBoxModal}
+          onEscapeKeyPress={handleCloseDialogueBoxModal}
           onBackdropClick={handleCloseDialogueBoxModal}
           title=""
           message="Are you sure you want to delete this contact?"

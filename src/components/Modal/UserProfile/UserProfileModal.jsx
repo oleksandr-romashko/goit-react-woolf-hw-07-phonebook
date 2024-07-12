@@ -7,6 +7,10 @@ import { setIsUserProfileModalOpen } from 'store/modals/slice';
 import Modal from '../Modal';
 import Icon from 'components/Icon/Icon';
 
+/**
+ * Modal with information the user and additional user profile actions.
+ * @returns {JSX.Element} Rendered user profile modal component.
+ */
 const UserProfileModal = () => {
   const dispatch = useDispatch();
 
@@ -14,23 +18,11 @@ const UserProfileModal = () => {
     dispatch(setIsUserProfileModalOpen(false));
   }, [dispatch]);
 
-  useEffect(() => {
-    const handleKeyPress = event => {
-      if (event.code === "Escape") {
-        handleModalClose();
-      }
-    };
-
-    window.addEventListener("keyup", handleKeyPress);
-    return () => {
-      window.removeEventListener("keyup", handleKeyPress);
-    };
-  }, [handleModalClose])
-
   return ReactDom.createPortal(
     <Modal
       title="User profile"
       onCloseBtnClick={handleModalClose}
+      onEscapeKeyPress={handleModalClose}
       onBackdropClick={handleModalClose}
     >
       <form>
@@ -43,6 +35,10 @@ const UserProfileModal = () => {
             <Icon name='cross-platform' stroke='currentcolor' />
             <Icon name='user-profile' stroke='currentcolor' />
           </div>
+          <label>
+            <input type='checkbox' />
+            Do not show info message and disclaimer at start
+          </label>
           <label>
             <input type='checkbox' />
             Remove all my previously created data after switching account
