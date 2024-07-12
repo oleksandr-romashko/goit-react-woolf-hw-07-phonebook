@@ -16,7 +16,7 @@ const Icon = props => {
     case 'important': return <ImportantIcon {...props} />
     case 'cross-platform': return <CrossPlatform {...props} />
     case 'user-profile': return <UserProfileIcon {...props} />
-    case 'close': return <CloseIcon {...props} />
+    case 'cross': return <CloseIcon {...props} />
     case 'question-mark': return <QuestionMarkIcon {...props} />
     default: return <QuestionMarkIcon {...props} />;
   }

@@ -39,7 +39,7 @@ const UserProfileModal = () => {
           <div>
             <input type='text'></input>
             <Icon name='important' stroke='currentcolor' />
-            <Icon name='close' stroke='currentcolor' />
+            <Icon name='cross' stroke='currentcolor' />
             <Icon name='cross-platform' stroke='currentcolor' />
             <Icon name='user-profile' stroke='currentcolor' />
           </div>
@@ -52,7 +52,7 @@ const UserProfileModal = () => {
           <p>Verification key</p>
           <div>
             <input type='password' />
-            <Icon name='close' stroke='currentcolor' />
+            <Icon name='cross' stroke='currentcolor' />
           </div>
         </div>
       </form>

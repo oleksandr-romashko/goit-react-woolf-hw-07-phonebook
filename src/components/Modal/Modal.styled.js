@@ -96,7 +96,7 @@ export const ModalContainer = styled('div')({
 export const CloseModalBtn = ({ className, onClick }) => {
   return (
     <Button className={`close-modal-btn ${className ?? ''}`} onClick={onClick}>
-      <Icon name="close" className="close-icon" />
+      <Icon name="cross" className="close-icon" />
     </Button>
   );
 };
