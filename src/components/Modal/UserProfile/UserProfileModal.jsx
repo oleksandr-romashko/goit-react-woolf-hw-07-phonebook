@@ -51,7 +51,7 @@ const UserProfileModal = () => {
         <div>
           <p>Verification key</p>
           <div>
-            <input type='text' />
+            <input type='password' />
             <Icon name='close' stroke='currentcolor' />
           </div>
         </div>
