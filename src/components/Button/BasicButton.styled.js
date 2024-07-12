@@ -1,7 +1,14 @@
 import styled from 'styled-components';
 
+export const BUTTON_STYLE = Object.freeze({
+  ACCENT_BLUE: 'accent-blue',
+  BLACK: 'black',
+  DANGER: 'danger',
+});
+
 const Button = styled('button')({
   position: 'relative',
+  minHeight: '36px',
   display: 'inline-flex',
   padding: '6px 16px',
   justifyContent: 'center',
@@ -11,25 +18,21 @@ const Button = styled('button')({
   fontSize: '22px',
   fontWeight: 500,
   lineHeight: '22px',
-  color: 'inherit',
-
-  '& > .spinner': {
-    position: 'absolute',
-  },
-
-  /* prevent text selection */
-  '-webkit-user-select': 'none' /* Safari */,
-  '-ms-user-select': 'none' /* IE 10 and IE 11 */,
-  'user-select': 'none' /* Standard syntax */,
+  color: 'currentcolor',
 
   borderRadius: '6px',
   border: '1px solid var(--color-basic-grey)',
   backgroundColor: 'var(--color-pure-white)',
   boxShadow: '0px 1px 2px 0px rgba(0, 0, 0, 0.15)',
 
+  /* prevent text selection */
+  '-webkit-user-select': 'none' /* Safari */,
+  '-ms-user-select': 'none' /* IE 10 and IE 11 */,
+  'user-select': 'none' /* Standard syntax */,
+
   '&:hover': {
-      backgroundColor: 'var(--color-accent-blue-light)',
-    },
+    backgroundColor: 'var(--color-accent-blue-light)',
+  },
 
   '&:focus': {
     outline: '1px solid var(--color-accent-blue-light)',
@@ -43,6 +46,23 @@ const Button = styled('button')({
     border: '1px solid var(--color-accent-blue-dark)',
     background: 'linear-gradient(180deg, #4a94fc 0%, #0a67e3 100%)',
     outline: 'unset',
+  },
+
+  '&.accent-blue': {
+    color: 'var(--color-basic-white)',
+    backgroundColor: 'var(--color-accent-blue-dark)',
+  },
+  '&.black': {
+    color: 'var(--color-basic-white)',
+    backgroundColor: 'var(--color-basic-black)',
+  },
+  '&.danger': {
+    color: 'var(--color-basic-white)',
+    backgroundColor: 'var(--color-accent-red-normal)',
+  },
+
+  '& > .spinner': {
+    position: 'absolute',
   },
 });
 
