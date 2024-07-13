@@ -35,17 +35,34 @@ const Filter = () => {
     dispatch(setFilterAction(''));
   };
 
+  // Add on Escape filter clear when filter is focused and not empty.
+  const handleKeyPress = event => {
+    if (event.code === 'Escape' && filterText) {
+      handleFilterClear();
+    }
+  };
+  const handleFilterFocus = event => {
+    const filterInputEl = event.target;
+    filterInputEl.addEventListener('keydown', handleKeyPress);
+  };
+  const handleFilterBlur = event => {
+    const filterInputEl = event.target;
+    filterInputEl.removeEventListener('keydown', handleKeyPress);
+  };
+
   return (
     <FilterWrapper>
       Find contacts by name
       <InputWrapper>
         <FilterInput
           value={filterText}
-          onChange={throttle(handleFilterChange, 150, { trailing: false })}
+          onChange={throttle(handleFilterChange, 110, { trailing: false })}
           type="text"
           name="filter"
           placeholder="Search"
           title="Search field to filter contact list. Case insensitive."
+          onFocus={handleFilterFocus}
+          onBlur={handleFilterBlur}
         />
         <ClearButton
           type="button"
