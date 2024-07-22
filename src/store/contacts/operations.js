@@ -1,6 +1,38 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { prepareRequestUser } from 'store/user/operations';
 import api from 'services/api';
+import { setContactsAction } from './slice';
+
+/**
+ * Fetches the contacts from the backend and updates the local state if there are discrepancies.
+ */
+const syncContacts = createAsyncThunk(
+  'contacts/syncContacts',
+  async (_, thunkAPI) => {
+    // Get current contacts from app state
+    const { items: currentContacts } = thunkAPI.getState().contacts;
+
+    try {
+      // Get contacts from backend
+      const response = await api.get('/contacts');
+      const fetchedContacts = response.data;
+
+      // Compare the fetched contacts with the local contacts
+      if (!areContactsEqual(currentContacts, fetchedContacts)) {
+        console.log(
+          'data on backend is not up to date, overwriting current data'
+        );
+        thunkAPI.dispatch(setContactsAction(fetchedContacts));
+      }
+    } catch (error) {
+      const errorMessage =
+        (error.response &&
+          error.response.status + ' ' + error.response.statusText) ||
+        error.message;
+      return thunkAPI.rejectWithValue(errorMessage);
+    }
+  }
+);
 
 /**
  * Fetches all contacts.
@@ -8,7 +40,8 @@ import api from 'services/api';
 export const fetchContacts = createAsyncThunk(
   'contacts/fetchContacts',
   async (_, thunkAPI) => {
-    prepareRequestUser(thunkAPI);
+    await prepareRequestUser(thunkAPI);
+
     try {
       const response = await api.get('/contacts');
       return response.data;
@@ -34,8 +67,16 @@ export const fetchContacts = createAsyncThunk(
 export const addContact = createAsyncThunk(
   'contacts/addContact',
   async ({ name, number }, thunkAPI) => {
-    prepareRequestUser(thunkAPI);
-    // TODO: prepareReauestContacts() - check for contacts update
+    await prepareRequestUser(thunkAPI);
+    await thunkAPI.dispatch(syncContacts());
+
+    const { items: currentContacts } = thunkAPI.getState().contacts;
+    if (currentContacts.find(el => el.name === name)) {
+      return thunkAPI.rejectWithValue(
+        `Contact ${name} already exists in the list.`
+      );
+    }
+
     try {
       const response = await api.post('/contacts', {
         name,
@@ -68,8 +109,16 @@ export const addContact = createAsyncThunk(
 export const deleteContactById = createAsyncThunk(
   'contacts/deleteContactById',
   async (id, thunkAPI) => {
-    prepareRequestUser(thunkAPI);
-    // TODO: prepareReauestContacts() - check for contacts update
+    await prepareRequestUser(thunkAPI);
+    await thunkAPI.dispatch(syncContacts());
+
+    const { items: currentContacts } = thunkAPI.getState().contacts;
+    if (!currentContacts.some(el => el.id === String(id))) {
+      return thunkAPI.rejectWithValue(
+        'Contact is not in the list of contacts. It may have never been there or might have been deleted previously.'
+      );
+    }
+
     try {
       const response = await api.delete(`/contacts/${id}`);
       return response.data;
@@ -93,8 +142,8 @@ export const deleteContactById = createAsyncThunk(
 export const deleteContacts = createAsyncThunk(
   'contacts/deleteContacts',
   async (contactsToDelete, thunkAPI) => {
-    prepareRequestUser(thunkAPI);
-    // TODO: prepareReauestContacts() - check for contacts update
+    await prepareRequestUser(thunkAPI);
+    await thunkAPI.dispatch(syncContacts());
 
     if (!contactsToDelete.length) {
       // Return results to the reducer
@@ -141,3 +190,38 @@ export const deleteContacts = createAsyncThunk(
     return { fulfilled, rejected };
   }
 );
+
+/**
+ * Compares current state contacts arrays with fetched remote contacts array.
+ * @param {object[]} currentContacts Current local contacts array in the state.
+ * @param {object[]} fetchedContacts Contacts array obtained from server.
+ * @returns {boolean} Result if arrays are equal.
+ */
+const areContactsEqual = (currentContacts, fetchedContacts) => {
+  if (currentContacts.length !== fetchedContacts.length) {
+    return false;
+  }
+
+  if (!currentContacts.length && !fetchedContacts.length) {
+    return true;
+  }
+
+  // normalize data by Asc sorting by id for proper and effective cmparison
+  currentContacts = currentContacts.toSorted(
+    (a, b) => Number(a.id) - Number(b.id)
+  );
+  fetchedContacts = fetchedContacts.toSorted(
+    (a, b) => Number(a.id) - Number(b.id)
+  );
+
+  return currentContacts.every((currentContact, index) => {
+    const fetchedContact = fetchedContacts[index];
+
+    // Compare each property
+    return (
+      currentContact.id === fetchedContact.id &&
+      currentContact.name === fetchedContact.name &&
+      currentContact.number === fetchedContact.phone_number
+    );
+  });
+};

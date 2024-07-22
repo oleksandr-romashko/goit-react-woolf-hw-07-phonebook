@@ -33,6 +33,19 @@ export const contactsSlice = createSlice({
     info: null,
   },
   reducers: {
+    setContactsAction: {
+      prepare: data => {
+        const contacts = data.map(el => ({
+          id: el.id,
+          name: el.name,
+          number: el.phone_number,
+        }));
+        return { payload: contacts };
+      },
+      reducer: (state, action) => {
+        state.items = action.payload;
+      },
+    },
     rejectContactAddWhenExistsAction(state, action) {
       state.status = requestStatus.addContact.failed;
       state.error = action.payload;
@@ -129,6 +142,7 @@ export const contactsSlice = createSlice({
   },
 });
 
-export const { rejectContactAddWhenExistsAction } = contactsSlice.actions;
+export const { setContactsAction, rejectContactAddWhenExistsAction } =
+  contactsSlice.actions;
 
 export default contactsSlice.reducer;
