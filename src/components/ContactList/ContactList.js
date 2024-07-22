@@ -12,8 +12,8 @@ import {
 import { selectFilter } from 'store/filter/selectors';
 import { selectDialogueBoxModal } from 'store/modals/selectors';
 import {
-  closeDialogueBoxModal,
-  showDialogueBoxModal,
+  closeDialogueBoxModalAction,
+  showDialogueBoxModalAction,
 } from 'store/modals/slice';
 import { deleteContactById, fetchContacts } from 'store/contacts/operations';
 
@@ -25,11 +25,12 @@ import Loader from 'components/Loader/Loader';
 import Spinner from 'components/Loader/Spinner';
 import { List, Item, InfoText } from './ContactList.styled';
 import ConfirmDialogueBoxModal from 'components/Modal/ConfirmDialogBox/ConfirmDialogueBoxModal';
+import { TextMessage } from 'components/Message/TextMessage.styled';
 
 /**
- * Info status messages.
+ * Info error status messages.
  */
-const INFO_DELETE_FAILED = 'Failed to delete contact';
+const INFO_DELETE_FAILED = 'Oops! Sorry, but something went wrong';
 
 /**
  * Component to contain the list of contact items.
@@ -54,16 +55,16 @@ const ContactList = () => {
   }, [dispatch]);
 
   if (loading && !status) {
-    return <Loader />;
+    return <Loader text="Just a moment, loading your contacts!" />;
   }
 
   if (error && !status) {
-    return `Sorry, but something went wrong: ${error}.`;
+    return <TextMessage>{INFO_DELETE_FAILED + `: ${error}`}</TextMessage>;
   }
 
   // No contacts message
   if (!contacts.length) {
-    return 'You have no contacts at the moment.';
+    return "Looks like you haven't added any contacts yet.";
   }
 
   const filteredContacts = filterContacts(contacts, filter);
@@ -79,7 +80,7 @@ const ContactList = () => {
    * Handles deletion of the contact.
    */
   const handleDeleteContactOnList = () => {
-    dispatch(closeDialogueBoxModal());
+    dispatch(closeDialogueBoxModalAction());
     dispatch(deleteContactById(deleteId));
   };
 
@@ -94,11 +95,12 @@ const ContactList = () => {
         event.target.blur();
       }
 
-      dispatch(showDialogueBoxModal({ deleteId, deleteName }));
+      dispatch(showDialogueBoxModalAction({ deleteId, deleteName }));
     }
   };
 
-  const handleCloseDialogueBoxModal = () => dispatch(closeDialogueBoxModal());
+  const handleCloseDialogueBoxModal = () =>
+    dispatch(closeDialogueBoxModalAction());
 
   return (
     <>
@@ -128,8 +130,7 @@ const ContactList = () => {
               }
             >
               {INFO_DELETE_FAILED}
-              {/* additional error message details showed lack of exact useful details for user */}
-              {/* {isDeleteError && error.contactId === Number(el.id) ? `: ${error.message}.` : '.'} */}
+              {error && error.message && `: ${error.message}`}
             </InfoText>
           </Item>
         ))}

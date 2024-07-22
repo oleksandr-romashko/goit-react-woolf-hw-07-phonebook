@@ -4,16 +4,12 @@ import throttle from 'lodash.throttle';
 import { selectFilter } from '../../store/filter/selectors';
 import { setFilterAction } from 'store/filter/slice';
 
-import {
-  FilterWrapper,
-  InputWrapper,
-  FilterInput,
-  ClearButton,
-} from './Filter.styled';
-import Icon from 'components/Icon/Icon';
+import { FilterWrapper } from './Filter.styled';
+import InteractiveInput from 'components/Input/InteractiveInput';
+import { ICON_NAME } from 'components/Icon/Icon';
 
 /**
- * Contacts filter component.
+ * Filter component for filtering contacts.
  * @returns {JSX.Element} Rendered filter component.
  */
 const Filter = () => {
@@ -21,7 +17,7 @@ const Filter = () => {
   const dispatch = useDispatch();
 
   /**
-   * Handles filter change.
+   * Handles filter change by writing value to the Redux state.
    * @param {string} event.target.value Filter value.
    */
   const handleFilterChange = ({ target: { value } }) => {
@@ -29,49 +25,36 @@ const Filter = () => {
   };
 
   /**
-   * Handles filter input text clear.
+   * Clears filter input text by clearing filter Redux state value.
    */
   const handleFilterClear = () => {
     dispatch(setFilterAction(''));
   };
 
-  // Add on Escape filter clear when filter is focused and not empty.
-  const handleKeyPress = event => {
+  /**
+   * Handles key press when filter input is focused
+   * @param {*} event
+   */
+  const handlesFilterKeyPress = event => {
     if (event.code === 'Escape' && filterText) {
       handleFilterClear();
     }
-  };
-  const handleFilterFocus = event => {
-    const filterInputEl = event.target;
-    filterInputEl.addEventListener('keydown', handleKeyPress);
-  };
-  const handleFilterBlur = event => {
-    const filterInputEl = event.target;
-    filterInputEl.removeEventListener('keydown', handleKeyPress);
   };
 
   return (
     <FilterWrapper>
       Find contacts by name
-      <InputWrapper>
-        <FilterInput
-          value={filterText}
-          onChange={throttle(handleFilterChange, 110, { trailing: false })}
-          type="text"
-          name="filter"
-          placeholder="Search"
-          title="Search field to filter contact list. Case insensitive."
-          onFocus={handleFilterFocus}
-          onBlur={handleFilterBlur}
-        />
-        <ClearButton
-          type="button"
-          onClick={handleFilterClear}
-          aria-label="clear filter"
-        >
-          <Icon name="cross" className="clear-btn-icon" />
-        </ClearButton>
-      </InputWrapper>
+      <InteractiveInput
+        className="filter-input"
+        value={filterText}
+        type="text"
+        placeholder="Search"
+        title="Filter contacts"
+        onChange={throttle(handleFilterChange, 200, { trailing: false })}
+        onKeyUp={handlesFilterKeyPress}
+        onAction={handleFilterClear}
+        actionIconName={ICON_NAME.CROSS}
+      />
     </FilterWrapper>
   );
 };

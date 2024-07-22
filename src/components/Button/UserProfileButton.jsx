@@ -1,4 +1,4 @@
-import Icon from 'components/Icon/Icon';
+import Icon, { ICON_NAME } from 'components/Icon/Icon';
 import { ProfileButton } from './UserProfileButton.styled';
 
 /**
@@ -7,7 +7,7 @@ import { ProfileButton } from './UserProfileButton.styled';
  */
 const UserProfileButton = () => (
   <ProfileButton>
-    <Icon name="user-profile" className="user-profile-icon" />
+    <Icon iconName={ICON_NAME.USER} className="user-profile-icon" />
   </ProfileButton>
 );
 

@@ -1,4 +1,4 @@
-import Icon from 'components/Icon/Icon';
+import Icon, { ICON_NAME } from 'components/Icon/Icon';
 import { Cause, FallbackWrapper, Tips } from './FallBackUI.styled';
 
 /**
@@ -8,7 +8,7 @@ import { Cause, FallbackWrapper, Tips } from './FallBackUI.styled';
  */
 const FallBackUI = ({ error }) => (
   <FallbackWrapper>
-    <Icon name="notepad" className="notepad-icon" />
+    <Icon iconName={ICON_NAME.NOTEPAD} className="notepad-icon" />
     <h1>
       Aaaah! Sorry, but something went wrong <span className="no-wrap">:(</span>
     </h1>
@@ -28,10 +28,12 @@ const FallBackUI = ({ error }) => (
         .
       </p>
     </Tips>
-    <Cause>
-      <summary>Details</summary>
-      <code>dsadsd</code>
-    </Cause>
+    {error && (
+      <Cause>
+        <summary>Details</summary>
+        <code>{error.stack}</code>
+      </Cause>
+    )}
   </FallbackWrapper>
 );
 

@@ -1,5 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchContacts, addContact, deleteContactById } from './operations';
+import {
+  fetchContacts,
+  addContact,
+  deleteContactById,
+  deleteContacts,
+} from './operations';
 
 export const requestStatus = Object.freeze({
   addContact: {
@@ -10,6 +15,11 @@ export const requestStatus = Object.freeze({
   deleteContact: {
     pending: 'deleteContact/inProgress',
     failed: 'deleteContact/failed',
+  },
+  deleteAllContacts: {
+    pending: 'deleteContacts/inProgress',
+    successful: 'deleteContacts/successful',
+    failed: 'deleteContacts/failed',
   },
 });
 
@@ -22,12 +32,7 @@ export const contactsSlice = createSlice({
     error: null,
   },
   reducers: {
-    // resetStatus(state) {
-    //   console.log('initiating state reset');
-    //   state.status = null;
-    //   state.error = null;
-    // },
-    rejectContactAddWhenExists(state, action) {
+    rejectContactAddWhenExistsAction(state, action) {
       state.status = requestStatus.addContact.failed;
       state.error = action.payload;
       state.loading = false;
@@ -86,6 +91,16 @@ export const contactsSlice = createSlice({
         };
       })
 
+      .addCase(deleteContacts.pending, (state, action) => {
+        state.status = requestStatus.deleteAllContacts.pending;
+      })
+      .addCase(deleteContacts.fulfilled, (state, action) => {
+        state.status = requestStatus.deleteAllContacts.successful;
+      })
+      .addCase(deleteContacts.rejected, (state, action) => {
+        state.status = requestStatus.deleteAllContacts.failed;
+      })
+
       .addMatcher(
         action => action.type.endsWith('/pending'),
         state => {
@@ -107,6 +122,6 @@ export const contactsSlice = createSlice({
   },
 });
 
-export const { rejectContactAddWhenExists } = contactsSlice.actions;
+export const { rejectContactAddWhenExistsAction } = contactsSlice.actions;
 
 export default contactsSlice.reducer;

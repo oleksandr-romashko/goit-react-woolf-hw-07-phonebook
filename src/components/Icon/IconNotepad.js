@@ -1,11 +1,12 @@
-import { ICON_DEFAULT } from './Icon';
+import styled from 'styled-components';
+import { ICON_DEFAULTS } from './Icon';
 
-const NotepadIcon = ({ className, fill, height, stroke, width }) => {
+const IconNotepad = ({ className, width, height, fill }) => {
   return (
-    <svg
+    <SVG
       className={className}
-      width={width || ICON_DEFAULT.WIDTH}
-      height={height || ICON_DEFAULT.HEIGHT}
+      width={width || ICON_DEFAULTS.WIDTH}
+      height={height || ICON_DEFAULTS.HEIGHT}
       viewBox="0 0 1292 1707"
       fill={fill}
       xmlns="http://www.w3.org/2000/svg"
@@ -106,8 +107,13 @@ const NotepadIcon = ({ className, fill, height, stroke, width }) => {
         d="M546.133 1555.87C541.067 1557.73 536.667 1560.13 536.267 1561.2C535.333 1564 541.067 1562.13 551.067 1556.67C560.8 1551.2 558.933 1550.93 546.133 1555.87Z"
         fill={fill}
       />
-    </svg>
+    </SVG>
   );
 };
 
-export { NotepadIcon };
+const SVG = styled('svg')({
+  fill: 'currentcolor',
+  stroke: 'none',
+});
+
+export { IconNotepad };

@@ -4,4 +4,4 @@
  * @returns {func} Disclaimer do not show flag selector.
  */
 export const selectDoNotShowDisclaimerAgain = state =>
-  state.persistent.doNotShowDisclaimer;
+  state.application.doNotShowDisclaimer;

@@ -1,11 +1,12 @@
-import { ICON_DEFAULT } from './Icon';
+import styled from 'styled-components';
+import { ICON_DEFAULTS } from './Icon';
 
-const IdeaIcon = ({ className, fill, height, stroke, width }) => {
+const IconIdea = ({ className, width, height, stroke, fill }) => {
   return (
-    <svg
+    <SVG
       className={className}
-      width={width || ICON_DEFAULT.WIDTH}
-      height={height || ICON_DEFAULT.HEIGHT}
+      width={width || ICON_DEFAULTS.WIDTH}
+      height={height || ICON_DEFAULTS.HEIGHT}
       viewBox="0 0 14 14"
       fill={fill}
       xmlns="http://www.w3.org/2000/svg"
@@ -16,8 +17,13 @@ const IdeaIcon = ({ className, fill, height, stroke, width }) => {
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-    </svg>
+    </SVG>
   );
 };
 
-export { IdeaIcon };
+const SVG = styled('svg')({
+  fill: 'none',
+  stroke: 'currentcolor',
+});
+
+export { IconIdea };

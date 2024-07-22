@@ -1,33 +1,40 @@
 import ReactDom from 'react-dom';
 import { useDispatch } from 'react-redux';
 
-import { setShowDisclaimerAgain } from 'store/persistent/slice';
-import { setIsDisclaimerModalOpen } from 'store/modals/slice';
+import { setDoNotShowDisclaimerAgainAction } from 'store/application/slice';
+import { setIsDisclaimerModalOpenAction } from 'store/modals/slice';
 
 import Modal from '../Modal';
 import Button from 'components/Button/BasicButton.styled';
-import Icon from 'components/Icon/Icon';
+import Icon, { ICON_NAME } from 'components/Icon/Icon';
 import {
   DisclaimerContainer,
   InfoWrapper,
   DoNotShowThisModalAgainForm,
 } from './DisclaimerModal.styled';
+import React from 'react';
 
 /**
- * Modal containing useful information.
+ * Modal containing useful information and disclaimer.
  * Allows to skip and not to show modal again by checking an appropriate checkbox.
- * Data about checked status stored in the Local Storage.
+ * Data about checked status persistently stored locally at user side.
  * @returns {JSX.Element} Rendered disclaimer modal component.
  */
 const DisclaimerModal = () => {
   const dispatch = useDispatch();
   
+  /**
+   * Handles storing value to show or not modal again at start.
+   * @param {React.SyntheticEvent} event Form submittal event. 
+   */
   const handleDoNotShowAgainSubmit = (event) => {
     event.preventDefault();
     const checkbox = event.currentTarget.elements['not-show-again-checkbox'];
     const isChecked = checkbox.checked;
-    dispatch(setShowDisclaimerAgain(isChecked));
-    dispatch(setIsDisclaimerModalOpen(false));
+    if (isChecked) {
+      dispatch(setDoNotShowDisclaimerAgainAction(true));
+    }
+    dispatch(setIsDisclaimerModalOpenAction(false));
   }
 
   return ReactDom.createPortal(
@@ -35,7 +42,7 @@ const DisclaimerModal = () => {
       <DisclaimerContainer>
         <InfoWrapper>
           <h3>
-            <Icon name='important' className='disclaimer-icon' />
+            <Icon iconName={ICON_NAME.IMPORTANT} className='disclaimer-icon' />
             State of Development and Personal Data Protection
           </h3>
           <p>This application was created for testing purposes and cannot guarantee that your data is safe and secure.</p>
@@ -44,14 +51,14 @@ const DisclaimerModal = () => {
         </InfoWrapper>
         <InfoWrapper>
           <h3>
-            <Icon name='cross-platform' className='disclaimer-icon' />
+            <Icon iconName={ICON_NAME.CROSS_PLATFORM} className='disclaimer-icon' />
             Contacts Sharing Functionality Across Devices
           </h3>
           <p>To share contacts and have access to them on multiple devices, you may set or change a unique user identifier in your profile settings, otherwise you will see only the contacts related to that identifier.</p>
         </InfoWrapper>
         <InfoWrapper>
           <h3>
-            <Icon name='idea' className='disclaimer-icon' />
+            <Icon iconName={ICON_NAME.IDEA} className='disclaimer-icon' />
             Feedback
           </h3>
           <p>

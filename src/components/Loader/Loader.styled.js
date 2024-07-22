@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const LoaderWrapper = styled('div')({
   width: '100%',
@@ -6,9 +6,25 @@ export const LoaderWrapper = styled('div')({
   paddingLeft: '16px',
   paddingRight: '16px',
   display: 'flex',
-  gap: '4px',
-  fontSize: '24px',
-  fontWeight: 500,
-  lineHeight: '24px',
+  columnGap: '4px',
+  rowGap: '8px',
+  flexWrap: 'wrap',
+  fontSize: '18px',
+  fontWeight: 400,
+  lineHeight: '27px',
   color: 'var(--color-basic-black)',
+
+  '@media screen and (min-width: 420px)': {
+    rowGap: '14px',
+  },
+
+  '@media screen and (min-width: 576px)': {
+    fontSize: '20px',
+    lineHeight: '28px',
+  },
+  '@media screen and (min-width: 768px)': {
+    rowGap: '16px',
+    fontSize: '22px',
+    lineHeight: '30px',
+  },
 });

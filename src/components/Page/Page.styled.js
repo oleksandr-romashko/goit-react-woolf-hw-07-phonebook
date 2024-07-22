@@ -12,6 +12,11 @@ const Page = styled('div')({
   '&:last-child': {
     marginBottom: '40px',
   },
+
+  '& .page-error-message': {
+    paddingLeft: '8px',
+    paddingRight: '8px',
+  },
 });
 
 export default Page;

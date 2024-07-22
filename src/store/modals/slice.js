@@ -6,6 +6,7 @@ const initialState = {
   dialogueBoxModal: {
     isDialogueBoxModalOpen: false,
     deleteId: null,
+    deleteName: null,
   },
 };
 
@@ -13,32 +14,34 @@ const modalsSlice = createSlice({
   name: 'modals',
   initialState,
   reducers: {
-    setIsDisclaimerModalOpen: (state, action) => {
+    setIsDisclaimerModalOpenAction: (state, action) => {
       state.isDisclaimerModalOpen = action.payload;
     },
-    setIsUserProfileModalOpen: (state, action) => {
+    setIsUserProfileModalOpenAction: (state, action) => {
       state.isUserProfileModalOpen = action.payload;
     },
-    showDialogueBoxModal: (state, action) => {
+    showDialogueBoxModalAction: (state, action) => {
       state.dialogueBoxModal = {
         isDialogueBoxModalOpen: true,
-        deleteId: action.payload,
+        deleteId: action.payload.deleteId,
+        deleteName: action.payload.deleteName,
       };
     },
-    closeDialogueBoxModal: state => {
+    closeDialogueBoxModalAction: state => {
       state.dialogueBoxModal = {
         isDialogueBoxModalOpen: false,
         deleteId: null,
+        deleteName: null,
       };
     },
   },
 });
 
 export const {
-  setIsDisclaimerModalOpen,
-  setIsUserProfileModalOpen,
-  showDialogueBoxModal,
-  closeDialogueBoxModal,
+  setIsDisclaimerModalOpenAction,
+  setIsUserProfileModalOpenAction,
+  showDialogueBoxModalAction,
+  closeDialogueBoxModalAction,
 } = modalsSlice.actions;
 
 export default modalsSlice.reducer;

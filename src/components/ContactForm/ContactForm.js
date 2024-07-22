@@ -9,8 +9,7 @@ import {
 } from 'store/contacts/selectors';
 import { setFilterAction } from 'store/filter/slice';
 import {
-  // resetStatus,
-  rejectContactAddWhenExists,
+  rejectContactAddWhenExistsAction,
   requestStatus,
 } from 'store/contacts/slice';
 import { addContact } from 'store/contacts/operations';
@@ -50,13 +49,6 @@ const ContactForm = () => {
   useEffect(() => {
     if (status === requestStatus.addContact.successful) {
       document.getElementById('add-form').reset();
-
-      // Remove info message upon timeout by resetting status.
-      // A better solution should be found as it removes status even in case
-      // if other not related status has been applied
-      // setTimeout(() => {
-      //   dispatch(resetStatus());
-      // }, 3500);
     }
   }, [status, dispatch]);
 
@@ -93,8 +85,10 @@ const ContactForm = () => {
         existingName.toLowerCase() === name.toLowerCase()
     );
     if (isExists) {
-      // Handle contact exists in the state
-      dispatch(rejectContactAddWhenExists('Contact is already in the list'));
+      // Handle case when contact is already exist in the state
+      dispatch(
+        rejectContactAddWhenExistsAction('Contact is already in the list')
+      );
       return;
     }
 

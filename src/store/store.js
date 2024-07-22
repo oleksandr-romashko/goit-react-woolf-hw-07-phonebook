@@ -3,19 +3,19 @@ import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore, PERSIST } from 'redux-persist';
 import rootReducer from './rootReducer';
 
-const rootPersistConfig = {
+export const rootPersistConfig = {
   key: 'phonebook',
   storage,
-  whitelist: ['persistent'],
+  whitelist: ['application', 'user'],
 };
-const persistedReducer = persistReducer(rootPersistConfig, rootReducer)
+const persistedReducer = persistReducer(rootPersistConfig, rootReducer);
 
 /**
  * A store that holds the whole state tree of the application.
  */
 const store = configureStore({
   reducer: persistedReducer,
-  middleware: (getDefaultMiddleware) =>
+  middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [PERSIST],

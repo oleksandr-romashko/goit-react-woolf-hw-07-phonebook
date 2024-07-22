@@ -116,12 +116,10 @@ export const DoNotShowThisModalAgainForm = styled('form')({
     },
   },
 
-  '& label input[type=checkbox]:checked': {
-    background: '#0f0',
-  },
-
   '& button': {
     width: '100%',
+    paddingLeft: '24px',
+    paddingRight: '24px',
     fontSize: 'inherit',
     color: 'var(--color-basic-white)',
     backgroundColor: 'var(--color-accent-blue-dark)',

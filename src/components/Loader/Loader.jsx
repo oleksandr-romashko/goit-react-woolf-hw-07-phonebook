@@ -2,13 +2,13 @@ import Spinner from "./Spinner";
 import { LoaderWrapper } from "./Loader.styled";
 
 /**
- * Loader component.
+ * Loader component to show loading in progress status.
  * @returns {JSX.Element} Rendered loader component.
  */
-const Loader = () => {
+const Loader = ({text}) => {
   return (
     <LoaderWrapper>
-      Loading
+      {text || 'Loading'}
       <Spinner />
     </LoaderWrapper>
   )

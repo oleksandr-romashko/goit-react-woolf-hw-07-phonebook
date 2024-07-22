@@ -1,12 +1,13 @@
 import ReactDom from 'react-dom';
 import PropTypes from 'prop-types';
 
-import { ButtonsWrapper } from './ConfirmDialogueBoxModal.styled';
 import Button, { BUTTON_STYLE } from 'components/Button/BasicButton.styled';
 import Modal from '../Modal';
+import WarningMessage from 'components/Message/WarningMessage';
+import { DialogueBoxButtonsWrapper, WarningWrapper } from './ConfirmDialogueBoxModal.styled';
 
 /**
- * Dialog for info messages and interaction with the user.
+ * Dialog box modal for info messages and interaction with the user.
  * @param {callback} props.onConfirm Function to handle confirmation click.
  * @param {callback} props.onRefuse Function to handle refuse click.
  * @param {callback} props.onCancel Function to handle cancel click.
@@ -36,6 +37,7 @@ const ConfirmDialogueBoxModal = (
     title = !onRefuse ? 'Thank you!' : 'Are you sure?',
     message,
     details,
+    warningMessage,
     confirmText = !onRefuse ? 'Ok' : 'Yes',
     refuseText = 'No',
     cancelText = 'Cancel',
@@ -57,8 +59,15 @@ const ConfirmDialogueBoxModal = (
       <div>
         {message && <p className='modal-message'>{message}</p>}
         {details && <p className='modal-details'>{details}</p>}
+        {warningMessage && 
+          <WarningWrapper>
+            <WarningMessage className='warning-message'>
+              {warningMessage}
+            </WarningMessage>
+          </WarningWrapper>
+        }
       </div>
-      <ButtonsWrapper>
+      <DialogueBoxButtonsWrapper>
         <Button className={confirmBtnStyle} onClick={onConfirm} autoFocus>
           {confirmText}
         </Button>
@@ -68,7 +77,7 @@ const ConfirmDialogueBoxModal = (
         {onCancel && <Button className={cancelBtnStyle} onClick={onCancel}>
                         {cancelText}
                       </Button>}
-      </ButtonsWrapper>
+      </DialogueBoxButtonsWrapper>
     </Modal>,
     document.getElementById(calledOnId)
   );

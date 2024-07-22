@@ -35,6 +35,8 @@ const Button = styled('button')({
     minWidth: '84px',
     width: '84px',
     height: '30px',
+    paddingLeft: '8px',
+    paddingRight: '8px',
     fontSize: '15px',
     lineHeight: '15px',
   },
@@ -80,6 +82,19 @@ const Button = styled('button')({
   '&.danger': {
     color: 'var(--color-basic-white)',
     backgroundColor: 'var(--color-accent-red-normal)',
+    '&:focus': {
+      outline: '1px solid var(--color-accent-red-dark)',
+      border: '1px solid var(--color-accent-red-dark)',
+      boxShadow:
+        '0px 0px 3px 6px var(--color-accent-red-normal), inset 0px 0px 0px 2px var(--color-accent-red-normal)',
+    },
+    '&:active': {
+      background: 'var(--color-accent-red-darkest)',
+      outline: '1px solid var(--color-accent-red-dark)',
+      border: '1px solid var(--color-accent-red-dark)',
+      boxShadow:
+        '0px 0px 3px 6px var(--color-accent-red-normal), inset 0px 0px 0px 2px var(--color-accent-red-normal)',
+    },
   },
 
   '& > .spinner': {
