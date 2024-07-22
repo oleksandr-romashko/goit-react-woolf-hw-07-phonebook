@@ -109,6 +109,38 @@ export const SECTION = styled('section')({
       marginTop: '6px',
       marginBottom: '8px',
       marginLeft: '16px',
+      minWidth: '190px',
     },
+  },
+});
+
+/**
+ * Informational text about delete operation results.
+ */
+export const InfoText = styled('p')({
+  marginLeft: '16px',
+  maxHeight: '0',
+  opacity: '0',
+  marginTop: '8px',
+  fontSize: '14px',
+  fontWeight: 400,
+  lineHeight: '14px',
+  transition: 'opacity 280ms ease-in-out, max-height 480ms ease-in-out',
+
+  '@media screen and (min-width: 420px)': {
+    fontSize: '16px',
+    lineHeight: '16px',
+  },
+  '@media screen and (min-width: 576px)': {
+    marginLeft: '18px',
+  },
+
+  '&[data-info-show="true"]': {
+    maxHeight: '300px',
+    opacity: '1',
+  },
+
+  '&.success': {
+    color: 'green',
   },
 });

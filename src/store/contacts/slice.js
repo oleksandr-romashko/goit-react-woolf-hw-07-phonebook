@@ -30,6 +30,7 @@ export const contactsSlice = createSlice({
     status: null,
     loading: false,
     error: null,
+    info: null,
   },
   reducers: {
     rejectContactAddWhenExistsAction(state, action) {
@@ -91,20 +92,26 @@ export const contactsSlice = createSlice({
         };
       })
 
-      .addCase(deleteContacts.pending, (state, action) => {
+      .addCase(deleteContacts.pending, state => {
         state.status = requestStatus.deleteAllContacts.pending;
+        state.loading = true;
       })
       .addCase(deleteContacts.fulfilled, (state, action) => {
         state.status = requestStatus.deleteAllContacts.successful;
+        state.info = action.payload;
       })
       .addCase(deleteContacts.rejected, (state, action) => {
         state.status = requestStatus.deleteAllContacts.failed;
+        state.error = {
+          message: action.payload,
+        };
       })
 
       .addMatcher(
         action => action.type.endsWith('/pending'),
         state => {
           state.error = null;
+          state.info = null;
         }
       )
       .addMatcher(

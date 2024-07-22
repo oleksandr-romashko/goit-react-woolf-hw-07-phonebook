@@ -95,6 +95,10 @@ const Button = styled('button')({
       boxShadow:
         '0px 0px 3px 6px var(--color-accent-red-normal), inset 0px 0px 0px 2px var(--color-accent-red-normal)',
     },
+
+    '& > .spinner .spinner-dot': {
+      backgroundColor: 'var(--color-basic-white)',
+    },
   },
 
   '& > .spinner': {

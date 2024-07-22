@@ -30,6 +30,13 @@ export const selectLoading = state => state.contacts.loading;
 export const selectError = state => state.contacts.error;
 
 /**
+ * Selector to obtain info details.
+ * @param {object} state Global app state.
+ * @returns {func} Info message selector.
+ */
+export const selectInfo = state => state.contacts.info;
+
+/**
  * Selector to obtain add contact form being loading flag.
  * @param {object} state Global app state.
  * @returns {func} Form being loading flag selector.
@@ -44,7 +51,7 @@ export const selectIsFormLoading = createSelector(
 /**
  * Selector to obtain contact being deleting flag.
  * @param {object} state Global app state.
- * @returns {func} Form being loading flag selector.
+ * @returns {func} Contact being deleting flag selector.
  */
 export const selectIsContactDeleteInProgress = createSelector(
   [selectLoading, selectStatus],
@@ -54,7 +61,7 @@ export const selectIsContactDeleteInProgress = createSelector(
 );
 
 /**
- * Selector to obtain delete error flag.
+ * Selector to obtain delete contact error flag.
  * @param {object} state Global app state.
  * @returns {func} Delete error flag selector.
  */
@@ -62,5 +69,45 @@ export const selectIsDeleteError = createSelector(
   [selectStatus, selectError],
   (status, isError) => {
     return isError && status && status === requestStatus.deleteContact.failed;
+  }
+);
+
+/**
+ * Selector to obtain all contacts being deleting flag.
+ * @param {object} state Global app state.
+ * @returns {func} All contacts being deleting flag selector.
+ */
+export const selectIsAllContactsDeleteInProgress = createSelector(
+  [selectLoading, selectStatus],
+  (loading, status) => {
+    return (
+      loading && status && status === requestStatus.deleteAllContacts.pending
+    );
+  }
+);
+
+/**
+ * Selector to obtain delete all contacts successful flag.
+ * @param {object} state Global app state.
+ * @returns {func} Delete error flag selector.
+ */
+export const selectIsDeleteAllContactsSuccessful = createSelector(
+  [selectStatus],
+  status => {
+    return status && status === requestStatus.deleteAllContacts.successful;
+  }
+);
+
+/**
+ * Selector to obtain delete all contacts error flag.
+ * @param {object} state Global app state.
+ * @returns {func} Delete error flag selector.
+ */
+export const selectIsDeleteAllContactsError = createSelector(
+  [selectStatus, selectError],
+  (status, isError) => {
+    return (
+      isError && status && status === requestStatus.deleteAllContacts.failed
+    );
   }
 );

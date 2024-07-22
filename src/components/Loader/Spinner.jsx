@@ -3,9 +3,9 @@ import { DotWrapper, Dot } from "./Spinner.styled"
 const Spinner = () => {
   return (
     <DotWrapper className='spinner'>
-      <Dot data-delay="0s" />
-      <Dot data-delay=".1s" />
-      <Dot data-delay=".2s" />
+      <Dot className="spinner-dot" data-delay="0s" />
+      <Dot className="spinner-dot" data-delay=".1s" />
+      <Dot className="spinner-dot" data-delay=".2s" />
     </DotWrapper>
   )
 }
