@@ -19,9 +19,6 @@ const syncContacts = createAsyncThunk(
 
       // Compare the fetched contacts with the local contacts
       if (!areContactsEqual(currentContacts, fetchedContacts)) {
-        console.log(
-          'data on backend is not up to date, overwriting current data'
-        );
         thunkAPI.dispatch(setContactsAction(fetchedContacts));
       }
     } catch (error) {
