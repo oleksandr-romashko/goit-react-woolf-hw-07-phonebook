@@ -162,12 +162,20 @@ const UserProfileModal = () => {
             <InfoText data-info-show={isDeleteAllLoading && loading}>
               Removing all contacts, please wait... This may take a while. We apologize for the wait.
             </InfoText>
-            <InfoText className='success' data-info-show={isDeleteAllContactsSuccessful && successfulInfo ? true : false}>
+            <InfoText
+              className='success'
+              data-info-show={isDeleteAllContactsSuccessful && successfulInfo ? true : false}
+            >
               {isDeleteAllContactsSuccessful && successfulInfo && 
                 <>
-                {successfulInfo.empty && <span>{successfulInfo.empty}</span>}
-                {successfulInfo.fulfilled && <span>Successfully removed {successfulInfo.fulfilled.length} {successfulInfo.fulfilled.length === 1 ? 'item' : 'items'}.</span>}
-                {successfulInfo.rejected && <span> Failed to remove {successfulInfo.rejected.length} {successfulInfo.rejected.length === 1 ? 'item' : 'items'}.</span>}
+                {successfulInfo.empty
+                  && <span>{successfulInfo.empty}</span>}
+                {successfulInfo.fulfilled
+                  && <span>Successfully removed {successfulInfo.fulfilled.length} {successfulInfo.fulfilled.length === 1
+                    ? 'contact' : 'contacts'}.</span>}
+                {successfulInfo.rejected
+                  && <span> Failed to remove {successfulInfo.rejected.length} {successfulInfo.rejected.length === 1
+                    ? 'contact' : 'contacts'}.</span>}
               </>
               }
             </InfoText>

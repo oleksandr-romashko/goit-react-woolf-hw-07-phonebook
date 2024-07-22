@@ -128,13 +128,17 @@ export const contactsSlice = createSlice({
         }
       )
       .addMatcher(
-        action => action.type.endsWith('/fulfilled'),
+        action =>
+          action.type.endsWith('/fulfilled') &&
+          !action.type.includes('syncContacts'),
         state => {
           state.loading = false;
         }
       )
       .addMatcher(
-        action => action.type.endsWith('/rejected'),
+        action =>
+          action.type.endsWith('/rejected') &&
+          !action.type.includes('syncContacts'),
         state => {
           state.loading = false;
         }

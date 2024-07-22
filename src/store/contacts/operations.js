@@ -179,6 +179,9 @@ export const deleteContacts = createAsyncThunk(
     // Wait for all promises to settle
     const results = await Promise.all(deletePromises);
 
+    // synch contacts changes
+    await thunkAPI.dispatch(syncContacts());
+
     // Process results
     const fulfilled = results.filter(result => result.status === 'fulfilled');
     const rejected = results.filter(result => result.status === 'rejected');
