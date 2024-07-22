@@ -71,11 +71,19 @@ export const Item = styled('li')({
     '& > a': {
       minWidth: '106px',
       color: 'var(--color-accent-blue-dark)',
+      textAlign: 'left',
+      whiteSpace: 'nowrap',
       outlineOffset: '4px',
       border: '1px solid transparent',
-      whiteSpace: 'nowrap',
+      '@media screen and (min-width: 420px)': {
+        minWidth: '138px',
+      },
       '@media screen and (min-width: 576px)': {
         marginRight: '24px',
+        minWidth: '150px',
+      },
+      '@media screen and (min-width: 768px)': {
+        minWidth: '168px',
       },
 
       '&:hover, &:focus': {
