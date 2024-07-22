@@ -13,6 +13,27 @@ import { rootPersistConfig } from 'store/store';
 import { rehydrateUserStateAction } from './slice';
 
 /**
+ * Validates user data.
+ */
+export const validateUser = createAsyncThunk(
+  'user/validateUser',
+  async (_, thunkAPI) => {
+    try {
+      thunkAPI.dispatch(
+        setProfileLoadingAction({ message: 'Validating user profile data' })
+      );
+      const { id, uuid, key } = thunkAPI.getState().user;
+      await validateCredentials({ id, uuid, key });
+    } catch (error) {
+      thunkAPI.dispatch(setProfileErrorAction(error.message));
+      return thunkAPI.rejectWithValue(error.message);
+    } finally {
+      thunkAPI.dispatch(setProfileLoadingAction(false));
+    }
+  }
+);
+
+/**
  * Creates a new user.
  */
 export const createUser = createAsyncThunk(
@@ -42,28 +63,7 @@ export const createUser = createAsyncThunk(
 export const DeleteUser = createAsyncThunk(
   'user/deleteUser',
   async ({ id }, thunkAPI) => {
-    // TODO: add contact deletion logic
-  }
-);
-
-/**
- * Validates user data.
- */
-export const validateUser = createAsyncThunk(
-  'user/validateUser',
-  async (_, thunkAPI) => {
-    try {
-      thunkAPI.dispatch(
-        setProfileLoadingAction({ message: 'Validating user profile data' })
-      );
-      const { id, uuid, key } = thunkAPI.getState().user;
-      await validateCredentials({ id, uuid, key });
-    } catch (error) {
-      thunkAPI.dispatch(setProfileErrorAction(error.message));
-      return thunkAPI.rejectWithValue(error.message);
-    } finally {
-      thunkAPI.dispatch(setProfileLoadingAction(false));
-    }
+    // TODO: add user deletion logic
   }
 );
 
@@ -88,7 +88,7 @@ export const prepareRequestUser = async thunkAPI => {
  * as valid keys and acceptable as equal.
  * @throws {Error} Error with message if user did not pass validation.
  */
-export const validateCredentials = async (user, thunkAPI) => {
+export const validateCredentials = async user => {
   try {
     const response = await api.get(`/users/${user.id}`);
     if (
