@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
@@ -15,7 +15,11 @@ import {
   closeDialogueBoxModalAction,
   showDialogueBoxModalAction,
 } from 'store/modals/slice';
-import { deleteContactById, fetchContacts } from 'store/contacts/operations';
+import {
+  deleteContactById,
+  fetchContacts,
+  syncContacts,
+} from 'store/contacts/operations';
 
 import textToNormalizedWordsArray from 'components/helpers/textToNormalizedWordsArray';
 import { sortAsc } from 'helpers/sort';
@@ -28,6 +32,11 @@ import ConfirmDialogueBoxModal from 'components/Modal/ConfirmDialogBox/ConfirmDi
 import { TextMessage } from 'components/Message/TextMessage.styled';
 
 /**
+ * Polling interval for polling strategy to receive contact list updates.
+ */
+const POLLING_INTERVAL = 30000;
+
+/**
  * Info error status messages.
  */
 const INFO_DELETE_FAILED = 'Oops! Sorry, but something went wrong';
@@ -38,6 +47,8 @@ const INFO_DELETE_FAILED = 'Oops! Sorry, but something went wrong';
  * @returns {JSX.Element} Rendered list of contacts or default message.
  */
 const ContactList = () => {
+  const dispatch = useDispatch();
+
   const contacts = useSelector(selectContacts);
   const status = useSelector(selectStatus);
   const loading = useSelector(selectLoading);
@@ -48,10 +59,45 @@ const ContactList = () => {
   const { isDialogueBoxModalOpen, deleteId, deleteName } = useSelector(
     selectDialogueBoxModal
   );
-  const dispatch = useDispatch();
 
+  const pollingIntervalRef = useRef(null);
+
+  // Set up polling updates using polling strategy for contacts synchronization.
+  // Do not poll when document is not visible.
   useEffect(() => {
+    // Fetch contacts immediately on mount
     dispatch(fetchContacts());
+
+    // Function to synch contacts if the tab is active
+    const fetchContactsIfVisible = () => {
+      if (document.visibilityState === 'visible') {
+        dispatch(syncContacts());
+      }
+    };
+
+    // Set up polling
+    pollingIntervalRef.current = setInterval(
+      fetchContactsIfVisible,
+      POLLING_INTERVAL
+    );
+
+    // Cleanup on unmount
+    return () => {
+      clearInterval(pollingIntervalRef.current);
+    };
+  }, [dispatch]);
+
+  // Set up visibility change event listener for polling updates.
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        dispatch(syncContacts());
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
   }, [dispatch]);
 
   if (loading && !status) {
