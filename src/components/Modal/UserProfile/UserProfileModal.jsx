@@ -7,15 +7,13 @@ import { selectDoNotShowDisclaimerAgain } from 'store/application/selectors';
 import { selectUserKey, selectUserUuid } from 'store/user/selectors';
 
 import Modal from '../Modal';
-import { ProfileWrapper, UserProfileForm, ProfileFormActions, SECTION } from './UserProfileModal.styled';
+import { ProfileWrapper, UserProfileForm, SECTION } from './UserProfileModal.styled';
 import Button, { BUTTON_STYLE } from 'components/Button/BasicButton.styled';
 import InteractiveInput from 'components/Input/InteractiveInput';
 import { setDoNotShowDisclaimerAgainAction } from 'store/application/slice';
 
 import { REMOVE_ALL_DATA_BTN_TEXT } from 'constants/buttonsTexts';
-import Icon, { ICON_NAME } from 'components/Icon/Icon';
-import { rootPersistConfig } from 'store/store';
-import WarningMessage from 'components/Message/WarningMessage';
+import { ICON_NAME } from 'components/Icon/Icon';
 import ConfirmDialogueBoxModal from '../ConfirmDialogBox/ConfirmDialogueBoxModal';
 import { deleteContacts } from 'store/contacts/operations';
 import { selectContacts } from 'store/contacts/selectors';

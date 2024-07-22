@@ -46,6 +46,7 @@ const Filter = () => {
       Find contacts by name
       <InteractiveInput
         className="filter-input"
+        id="filter"
         value={filterText}
         type="text"
         placeholder="Search"
