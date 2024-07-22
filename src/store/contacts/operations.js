@@ -6,7 +6,7 @@ import { setContactsAction } from './slice';
 /**
  * Fetches the contacts from the backend and updates the local state if there are discrepancies.
  */
-const syncContacts = createAsyncThunk(
+export const syncContacts = createAsyncThunk(
   'contacts/syncContacts',
   async (_, thunkAPI) => {
     // Get current contacts from app state
