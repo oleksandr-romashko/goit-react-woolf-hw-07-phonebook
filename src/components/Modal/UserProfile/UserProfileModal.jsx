@@ -87,7 +87,7 @@ const UserProfileModal = () => {
 
         if (deleteContactsResult.rejected.length === 0) {
           // Dispatch deleteCurrentUser and wait for it to complete
-          const deleteUserResult = await dispatch(deleteCurrentUser()).unwrap();
+          await dispatch(deleteCurrentUser()).unwrap();
 
           // Remove local data from user browser
           localStorage.removeItem(`persist:${rootPersistConfig.key}`);
@@ -124,6 +124,10 @@ const UserProfileModal = () => {
     >
       <ProfileWrapper>
         <UserProfileForm>
+          {/* <p>
+            You may share your unique user identifier and verification key with others, and they will be able to see and manage your contacts as well.
+          </p> */}
+
           <InteractiveInput
             className='user-identifier-input'
             name={'user-uuid'}
@@ -220,10 +224,8 @@ const UserProfileModal = () => {
                 message={'Are you sure you want to delete all user data?'}
                 warningMessage={
                   <>
-                    {/* <p>All your data, including user profile information and contacts, will be removed from this application.</p> */}
-                    {/* <p>This action cannot be undone, and all information will be lost.</p> */}
-                    <p>All your contacts, will be removed from this application.</p>
-                    <p>This action cannot be undone, and all contact information will be lost.</p>
+                    <p>All your data, including user profile information and contacts, will be removed from this application.</p>
+                    <p>This action cannot be undone, and all information will be lost.</p>
                   </>
                 }
                 confirmText="Yes, delete"
