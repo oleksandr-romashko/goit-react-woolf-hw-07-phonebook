@@ -56,11 +56,11 @@ This solution follows provided requirements. You may read more about them [here]
 1. Make sure you have an LTS version of Node.js installed on your computer. [Download and install](https://nodejs.org/en/) it if necessary.
 2. Clone the repository:
     ```sh
-    git clone https://github.com/oleksandr-romashko/goit-react-woolf-hw-06-phonebook.git
+    git clone https://github.com/oleksandr-romashko/goit-react-woolf-hw-07-phonebook.git
     ```
 3. Navigate to the project directory:
     ```sh
-    cd goit-react-woolf-hw-06-phonebook
+    cd goit-react-woolf-hw-07-phonebook
     ```
 4. Install the dependencies:
     ```sh
@@ -78,5 +78,6 @@ The application will be available at http://localhost:3000.
 
 #### Live page
 
-1. To set-up your own GitHub live page, please consider [following instructions](./assets/teplate-repository-usage/README.en.md).
-2. Add `REACT_APP_MOCKAPI_API_SECRET` repository secret with unique [mockapi.io](https://github.com/mockapi-io/docs/wiki/Quick-start-guide) project token as a value to access your backend. All environmental secrets and variables are described in [.env.example](.env.example) file.
+1. Add `REACT_APP_MOCKAPI_API_SECRET` repository secret with unique [mockapi.io](https://github.com/mockapi-io/docs/wiki/Quick-start-guide) project token as a value to access your backend. All environmental secrets and variables are described in [.env.example](.env.example) file.
+2. Set-up your own GitHub live page, please consider following [these instructions](./assets/teplate-repository-usage/README.en.md).
+
