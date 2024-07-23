@@ -110,7 +110,7 @@ const UserProfileModal = () => {
           <InteractiveInput
             className='user-identifier-input'
             name={'user-uuid'}
-            label='User unique identifier'
+            label='Unique user identifier'
             value={userUuid ?? 'User profile not found'}
             type='text'
             copyable
