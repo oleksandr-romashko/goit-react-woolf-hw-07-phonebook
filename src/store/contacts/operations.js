@@ -9,12 +9,15 @@ import { setContactsAction } from './slice';
 export const syncContacts = createAsyncThunk(
   'contacts/syncContacts',
   async (_, thunkAPI) => {
+    await prepareRequestUser(thunkAPI);
+
     // Get current contacts from app state
     const { items: currentContacts } = thunkAPI.getState().contacts;
 
     try {
       // Get contacts from backend
-      const response = await api.get('/contacts');
+      const { id: userId } = thunkAPI.getState().user;
+      const response = await api.get(`users/${userId}/contacts`);
       const fetchedContacts = response.data;
 
       // Compare the fetched contacts with the local contacts
@@ -40,12 +43,13 @@ export const fetchContacts = createAsyncThunk(
     await prepareRequestUser(thunkAPI);
 
     try {
-      const response = await api.get('/contacts');
+      const { id: userId } = thunkAPI.getState().user;
+      const response = await api.get(`users/${userId}/contacts`);
       return response.data;
     } catch (error) {
       if (error.response.status === 404) {
         return thunkAPI.rejectWithValue(
-          "We couldn't find your contact list. Unable to load."
+          "Looks like you haven't added any contacts yet."
         );
       } else {
         const errorMessage =
@@ -67,6 +71,7 @@ export const addContact = createAsyncThunk(
     await prepareRequestUser(thunkAPI);
     await thunkAPI.dispatch(syncContacts());
 
+    // check if contact absent in the list of contacts
     const { items: currentContacts } = thunkAPI.getState().contacts;
     if (currentContacts.find(el => el.name === name)) {
       return thunkAPI.rejectWithValue(
@@ -75,7 +80,8 @@ export const addContact = createAsyncThunk(
     }
 
     try {
-      const response = await api.post('/contacts', {
+      const { id: userId } = thunkAPI.getState().user;
+      const response = await api.post(`users/${userId}/contacts`, {
         name,
         phone_number: number,
       });
@@ -109,6 +115,7 @@ export const deleteContactById = createAsyncThunk(
     await prepareRequestUser(thunkAPI);
     await thunkAPI.dispatch(syncContacts());
 
+    // check if contacts is present in the list of contacts
     const { items: currentContacts } = thunkAPI.getState().contacts;
     if (!currentContacts.some(el => el.id === String(id))) {
       return thunkAPI.rejectWithValue(
@@ -117,7 +124,8 @@ export const deleteContactById = createAsyncThunk(
     }
 
     try {
-      const response = await api.delete(`/contacts/${id}`);
+      const { id: userId } = thunkAPI.getState().user;
+      const response = await api.delete(`users/${userId}/contacts/${id}`);
       return response.data;
     } catch (error) {
       if (error.response.status === 404) {
@@ -149,11 +157,13 @@ export const deleteContacts = createAsyncThunk(
       };
     }
 
+    const { id: userId } = thunkAPI.getState().user;
+
     const deletePromises = contactsToDelete.map((contact, index) => {
       return new Promise((resolve, reject) => {
         setTimeout(async () => {
           try {
-            await api.delete(`/contacts/${contact.id}`);
+            await api.delete(`/users/${userId}/contacts/${contact.id}`);
             resolve({ status: 'fulfilled', contact });
           } catch (error) {
             if (error.response && error.response.status === 429) {

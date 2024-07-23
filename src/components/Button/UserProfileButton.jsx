@@ -6,7 +6,7 @@ import { ProfileButton } from './UserProfileButton.styled';
 * @returns {JSX.Element} Rendered user profile button.
  */
 const UserProfileButton = () => (
-  <ProfileButton>
+  <ProfileButton role="button" aria-label='user profile' >
     <Icon iconName={ICON_NAME.USER} className="user-profile-icon" />
   </ProfileButton>
 );

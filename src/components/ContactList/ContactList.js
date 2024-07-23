@@ -39,7 +39,7 @@ const POLLING_INTERVAL = 30000;
 /**
  * Info error status messages.
  */
-const INFO_DELETE_FAILED = 'Oops! Sorry, but something went wrong';
+const INFO_ERROR_PREFIX = 'Oops! Sorry, but something went wrong';
 
 /**
  * Component to contain the list of contact items.
@@ -105,7 +105,7 @@ const ContactList = () => {
   }
 
   if (error && !status) {
-    return <TextMessage>{INFO_DELETE_FAILED + `: ${error}`}</TextMessage>;
+    return <TextMessage>{error}</TextMessage>;
   }
 
   // No contacts message
@@ -175,7 +175,7 @@ const ContactList = () => {
                 isDeleteError && error.contactId === Number(el.id)
               }
             >
-              {INFO_DELETE_FAILED}
+              {INFO_ERROR_PREFIX}
               {error && error.message && `: ${error.message}`}
             </InfoText>
           </Item>
