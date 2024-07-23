@@ -10,7 +10,7 @@ const API_KEY = process.env.REACT_APP_MOCKAPI_API_SECRET;
  */
 export const api = axios.create({
   baseURL: `https://${API_KEY}.mockapi.io`,
-  timeout: 9000,
+  timeout: 15000,
   headers: { 'content-type': 'application/json' },
 });
 
