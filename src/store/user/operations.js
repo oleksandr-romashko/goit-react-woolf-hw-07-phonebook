@@ -2,7 +2,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import isEqual from 'lodash.isequal';
 
 import {
-  profileRequestStatus,
   setProfileErrorAction,
   setProfileLoadingAction,
 } from 'store/profile/slice';
