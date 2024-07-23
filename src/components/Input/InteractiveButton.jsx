@@ -28,7 +28,13 @@ const InteractiveButton = ({ className, iconName, onClick, isConfirmable }) => {
   };
   
   return (
-    <StyledButton className={className} type='button' onClick={handleButtonClick}>
+    <StyledButton
+      className={className}
+      type='button'
+      onClick={handleButtonClick}
+      role="button"
+      aria-label='interactive action'
+    >
       <Icon
         iconName={iconName}
         className='interactive-btn-icon copy-paste-icon'

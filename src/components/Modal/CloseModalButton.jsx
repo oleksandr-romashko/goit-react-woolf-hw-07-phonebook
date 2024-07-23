@@ -11,7 +11,12 @@ import Icon, { ICON_NAME } from 'components/Icon/Icon';
  */
 const CloseModalButton = ({ className, onClick }) => {
   return (
-    <Button className={`close-modal-btn ${className ?? ''}`} onClick={onClick}>
+    <Button
+      className={`close-modal-btn ${className ?? ''}`}
+      onClick={onClick}
+      role="button"
+      aria-label='close modal'
+    >
       <Icon iconName={ICON_NAME.CROSS} className="close-icon" />
     </Button>
   );

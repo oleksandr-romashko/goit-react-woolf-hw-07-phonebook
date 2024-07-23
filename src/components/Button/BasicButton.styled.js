@@ -80,7 +80,7 @@ const Button = styled('button')({
     backgroundColor: 'var(--color-basic-black)',
   },
   '&.danger': {
-    color: 'var(--color-basic-white)',
+    color: 'var(--color-pure-white)',
     backgroundColor: 'var(--color-accent-red-normal)',
     '&:focus': {
       outline: '1px solid var(--color-accent-red-dark)',

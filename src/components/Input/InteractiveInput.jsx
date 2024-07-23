@@ -82,11 +82,12 @@ const InteractiveInput = ({
           disabled={disabled}
         />
         <ButtonsWrapper>
-          {onAction && 
+          {onAction &&
             <InteractiveButton
               className='action'
               iconName={actionIconName}
               onClick={onAction}
+              aria-label='additional action'
             />
           }
           {copyable &&
@@ -95,6 +96,7 @@ const InteractiveInput = ({
               iconName={ICON_NAME.COPY_PASTE}
               onClick={handleCopyTextToClipboard}
               isConfirmable='true'
+              aria-label='copy input field text'
             />
           }
         </ButtonsWrapper>

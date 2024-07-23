@@ -68,15 +68,33 @@ const ConfirmDialogueBoxModal = (
         }
       </div>
       <DialogueBoxButtonsWrapper>
-        <Button className={confirmBtnStyle} onClick={onConfirm} autoFocus>
+        <Button
+          className={confirmBtnStyle}
+          onClick={onConfirm}
+          autoFocus
+          role="button"
+          aria-label='confirm choice'
+        >
           {confirmText}
         </Button>
-        {onRefuse &&  <Button className={refuseBtnStyle} onClick={onRefuse}>
-                        {refuseText}
-                      </Button>}
-        {onCancel && <Button className={cancelBtnStyle} onClick={onCancel}>
-                        {cancelText}
-                      </Button>}
+        {onRefuse &&
+          <Button
+            className={refuseBtnStyle}
+            onClick={onRefuse}
+            role="button"
+            aria-label='refuse choice'
+          >
+            {refuseText}
+          </Button>}
+        {onCancel &&
+          <Button
+            className={cancelBtnStyle}
+            onClick={onCancel}
+            role="button"
+            aria-label='cancel choice'
+          >
+            {cancelText}
+          </Button>}
       </DialogueBoxButtonsWrapper>
     </Modal>,
     document.getElementById(calledOnId)

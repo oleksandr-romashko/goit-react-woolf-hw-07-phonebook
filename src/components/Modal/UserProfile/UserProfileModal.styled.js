@@ -89,7 +89,7 @@ export const SECTION = styled('section')({
     minWidth: '100%',
     maxWidth: '300px',
     borderRadius: '5px',
-    color: 'var(--color-accent-red-normal)',
+    color: 'var(--color-accent-red-dark)',
 
     '& summary': {
       paddingTop: '6px',
@@ -109,7 +109,16 @@ export const SECTION = styled('section')({
       marginTop: '6px',
       marginBottom: '8px',
       marginLeft: '16px',
-      minWidth: '190px',
+      minWidth: '176px',
+      '@media screen and (min-width: 420px)': {
+        minWidth: '184px',
+      },
+      '@media screen and (min-width: 576px)': {
+        minWidth: '208px',
+      },
+      '@media screen and (min-width: 768px)': {
+        minWidth: '220px',
+      },
     },
   },
 });
