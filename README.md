@@ -1,7 +1,7 @@
 # Contact Book
 
 <p align="center">
-  <img align="center" src="./assets/application-preview.png" width="600" title="Application interface" alt="application interface preview">
+  <img align="center" src="./assets/application-preview.jpg" width="600" title="Application interface" alt="application interface preview">
 </p>
 
 <h5 align="center">
