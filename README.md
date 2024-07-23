@@ -43,6 +43,13 @@ This solution follows provided requirements. You may read more about them [here]
   - `fetchContacts` - get an array of contacts (GET method) using GET request - action type `contacts/fetchAll`.
   - `addContact` - add contact (POST method) - action type `contacts/addContact`.
   - `deleteContact` - deletes a contact (DELETE method) - action type `contacts/deleteContact`.
+  
+  Mockapi backend should have following structure and endpoints:
+  <p align="center">
+    <img align="center" src="./assets/mockapi-structure.png" width="480" title="Application interface" alt="application interface preview">
+  </p>
+
+
 
 ### Installation
 
@@ -62,12 +69,14 @@ This solution follows provided requirements. You may read more about them [here]
 
 ### Running the Application
 
-Start the development server:
+#### Locally
 
-```sh
-npm start
-```
+1. Create a `.env.local` file in the project root folder. It should contain `REACT_APP_MOCKAPI_API_SECRET` environment variable with your unique [mockapi.io](https://github.com/mockapi-io/docs/wiki/Quick-start-guide) project token as a value to access your backend. Use the [.env.example](.env.example) file as a template.
+2. Start the development server in terminal: `npm start`
 
 The application will be available at http://localhost:3000.
 
-To set-up your own GitHub live page, please consider [following instructions](./assets/teplate-repository-usage/README.en.md).  
+#### Live page
+
+1. To set-up your own GitHub live page, please consider [following instructions](./assets/teplate-repository-usage/README.en.md).
+2. Add `REACT_APP_MOCKAPI_API_SECRET` repository secret with unique [mockapi.io](https://github.com/mockapi-io/docs/wiki/Quick-start-guide) project token as a value to access your backend. All environmental secrets and variables are described in [.env.example](.env.example) file.
