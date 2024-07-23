@@ -47,17 +47,16 @@ export const fetchContacts = createAsyncThunk(
       const response = await api.get(`users/${userId}/contacts`);
       return response.data;
     } catch (error) {
-      if (error.response.status === 404) {
+      if (error.response && error.response.status === 404) {
         return thunkAPI.rejectWithValue(
           "Looks like you haven't added any contacts yet."
         );
-      } else {
-        const errorMessage =
-          (error.response &&
-            error.response.status + ' ' + error.response.statusText) ||
-          error.message;
-        return thunkAPI.rejectWithValue(errorMessage);
       }
+      const errorMessage =
+        (error.response &&
+          error.response.status + ' ' + error.response.statusText) ||
+        error.message;
+      return thunkAPI.rejectWithValue(errorMessage);
     }
   }
 );
@@ -88,6 +87,7 @@ export const addContact = createAsyncThunk(
       return response.data;
     } catch (error) {
       if (
+        error.response &&
         error.response.status === 400 &&
         error.response.data ===
           'Max number of elements reached for this resource!'
@@ -95,13 +95,12 @@ export const addContact = createAsyncThunk(
         const errorMessage =
           'Sorry, we currently support a maximum of 100 contacts';
         return thunkAPI.rejectWithValue(errorMessage);
-      } else {
-        const errorMessage =
-          (error.response &&
-            error.response.status + ' ' + error.response.statusText) ||
-          error.message;
-        return thunkAPI.rejectWithValue(errorMessage);
       }
+      const errorMessage =
+        (error.response &&
+          error.response.status + ' ' + error.response.statusText) ||
+        error.message;
+      return thunkAPI.rejectWithValue(errorMessage);
     }
   }
 );

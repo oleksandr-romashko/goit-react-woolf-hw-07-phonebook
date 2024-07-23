@@ -60,10 +60,10 @@ export const createUser = createAsyncThunk(
 /**
  * Deletes user with all its contacts and data.
  */
-export const DeleteUser = createAsyncThunk(
+export const deleteUser = createAsyncThunk(
   'user/deleteUser',
-  async ({ id }, thunkAPI) => {
-    // TODO: add user deletion logic
+  async (_, thunkAPI) => {
+    // TODO: Add user deletion
   }
 );
 
@@ -105,7 +105,7 @@ export const validateCredentials = async user => {
     if (!error.response || !error.response.status) {
       throw error;
     }
-    if (error.response.status === 404) {
+    if (error.response && error.response.status === 404) {
       const errorMessage =
         "We couldn't find your user profile." +
         ' Please update your credentials in your user profile.';
