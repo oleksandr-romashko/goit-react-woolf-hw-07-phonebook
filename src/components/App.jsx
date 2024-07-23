@@ -4,26 +4,26 @@ import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 
 import { createUser, validateUser } from 'store/user/operations';
 import {
-  setIsDisclaimerModalOpenAction,
-  setIsUserProfileModalOpenAction
+  setIsDisclaimerModalOpenAction, setIsUserProfileModalOpenAction
 } from 'store/modals/slice';
 import { selectDoNotShowDisclaimerAgain } from 'store/application/selectors';
 import {
-  selectIsDisclaimerModalOpen,
-  selectIsUserProfileModalOpen,
+  selectProfileError, selectProfileLoading, selectProfileStatus
+} from 'store/profile/selectors';
+import { selectUserId } from 'store/user/selectors';
+import {
+  selectIsDisclaimerModalOpen,  selectIsUserProfileModalOpen,
 } from 'store/modals/selectors';
 
 import Phonebook from 'components/Phonebook/Phonebook';
 import UserProfileButton from './Button/UserProfileButton';
-import DisclaimerModal from './Modal/Disclaimer/DisclaimerModal';
-import UserProfileModal from './Modal/UserProfile/UserProfileModal';
+import TextMessage from './Message/TextMessage';
+import Loader from './Loader/Loader';
 import Page from 'components/Page/Page.styled';
 import Header from 'components/Header/Header.styled';
 import HeaderControls from './Header/HeaderControls.styled';
-import Loader from './Loader/Loader';
-import { selectProfileError, selectProfileLoading } from 'store/profile/selectors';
-import { selectUserId } from 'store/user/selectors';
-import { TextMessage } from './Message/TextMessage.styled';
+import DisclaimerModal from './Modal/Disclaimer/DisclaimerModal';
+import UserProfileModal from './Modal/UserProfile/UserProfileModal';
 
 /**
  * Contact Book application component.
@@ -41,6 +41,8 @@ const App = () => {
 
   const doNotShowDisclaimerFlag = useSelector(selectDoNotShowDisclaimerAgain);
   
+  const profileIsDeletedStatus = useSelector(selectProfileStatus);
+
   /**
    * Setting to show or hide disclaimer modal at start.
    * Change will not be instant and will be effective on next visit or page refresh.
@@ -60,13 +62,15 @@ const App = () => {
    * Creates a new user if no user info or validates existing user.
    */
   useEffect(() => {
-    if (!userId) {
-      // No user -> request to create a new user
-      dispatch(createUser());
-    } else {
-      dispatch(validateUser());
+    if (!profileIsDeletedStatus) {
+      if (!userId) {
+        // No user -> request to create a new user
+        dispatch(createUser());
+      } else {
+        dispatch(validateUser());
+      }
     }
-  }, [dispatch, userId]);
+  }, [dispatch, userId, profileIsDeletedStatus]);
 
   /**
    * Handles show of the user profile modal.
@@ -81,6 +85,28 @@ const App = () => {
       dispatch(setIsUserProfileModalOpenAction(true));
     }    
   };
+
+  let deletedProfileMessage;
+  if (profileIsDeletedStatus) {
+    deletedProfileMessage =
+      <>
+        <p>All your data has been successfully deleted and your user account has been removed. You may now close this tab.</p>
+        <p>To continue using this application, simply refresh the page. A new account will be created for you automatically on page refresh or on your next visit.</p>
+        <p>Thank you!</p>
+        <p className='secondary'>I would love to read your thoughts, questions, issues, typos, and anything else you feel like sharing with me.</p>
+        <p className='secondary'>You can contact me on&nbsp;
+          <a
+            href="https://github.com/oleksandr-romashko"
+            title="Developer GitHub page"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub
+          </a>
+          .
+        </p>
+      </>
+  }
   
   return (
     <>
@@ -93,8 +119,28 @@ const App = () => {
             </HeaderControls>
           </Header>
           {loading && <Loader text={loading.message || 'Loading user profile data'} />}
-          {error && <TextMessage className='page-error-message'>Oops! Sorry, but something went wrong: {error}</TextMessage>}
-          {!error && !loading && userId && <Phonebook />}
+          {error &&
+            <TextMessage className='page-message'>
+              <p>{error}</p>
+              <p className='secondary'>I would love to read your thoughts, questions, issues, typos, and anything else you feel like sharing with me.</p>
+              <p className='secondary'>You can contact me on&nbsp;
+                <a
+                  href="https://github.com/oleksandr-romashko"
+                  title="Developer GitHub page"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  GitHub
+                </a>
+                .
+              </p>
+            </TextMessage>}
+          {profileIsDeletedStatus &&
+            <TextMessage className='page-message'>
+              {deletedProfileMessage}
+            </TextMessage>
+          }
+          {!error && !loading && !profileIsDeletedStatus && userId && <Phonebook />}
         </ErrorBoundary>
       </Page>
       {isUserProfileModalOpen && <UserProfileModal />}

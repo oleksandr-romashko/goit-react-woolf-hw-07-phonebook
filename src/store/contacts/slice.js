@@ -6,7 +6,7 @@ import {
   deleteContacts,
 } from './operations';
 
-export const requestStatus = Object.freeze({
+export const contactsRequestStatus = Object.freeze({
   addContact: {
     pending: 'addContact/inProgress',
     successful: 'addContact/successful',
@@ -47,7 +47,7 @@ export const contactsSlice = createSlice({
       },
     },
     rejectContactAddWhenExistsAction(state, action) {
-      state.status = requestStatus.addContact.failed;
+      state.status = contactsRequestStatus.addContact.failed;
       state.error = action.payload;
       state.loading = false;
     },
@@ -70,11 +70,11 @@ export const contactsSlice = createSlice({
       })
 
       .addCase(addContact.pending, state => {
-        state.status = requestStatus.addContact.pending;
+        state.status = contactsRequestStatus.addContact.pending;
         state.loading = true;
       })
       .addCase(addContact.fulfilled, (state, action) => {
-        state.status = requestStatus.addContact.successful;
+        state.status = contactsRequestStatus.addContact.successful;
         const { id, name, phone_number: number } = action.payload;
         state.items.push({
           id,
@@ -84,13 +84,13 @@ export const contactsSlice = createSlice({
         state.isLoadingFormBtn = false;
       })
       .addCase(addContact.rejected, (state, action) => {
-        state.status = requestStatus.addContact.failed;
+        state.status = contactsRequestStatus.addContact.failed;
         state.error = action.payload;
         state.isLoadingFormBtn = false;
       })
 
       .addCase(deleteContactById.pending, (state, action) => {
-        state.status = requestStatus.deleteContact.pending;
+        state.status = contactsRequestStatus.deleteContact.pending;
         state.loading = { id: action.meta.arg };
       })
       .addCase(deleteContactById.fulfilled, (state, action) => {
@@ -98,7 +98,7 @@ export const contactsSlice = createSlice({
         state.items.splice(index, 1);
       })
       .addCase(deleteContactById.rejected, (state, action) => {
-        state.status = requestStatus.deleteContact.failed;
+        state.status = contactsRequestStatus.deleteContact.failed;
         state.error = {
           contactId: action.meta.arg,
           message: action.payload,
@@ -106,15 +106,15 @@ export const contactsSlice = createSlice({
       })
 
       .addCase(deleteContacts.pending, state => {
-        state.status = requestStatus.deleteAllContacts.pending;
+        state.status = contactsRequestStatus.deleteAllContacts.pending;
         state.loading = true;
       })
       .addCase(deleteContacts.fulfilled, (state, action) => {
-        state.status = requestStatus.deleteAllContacts.successful;
+        state.status = contactsRequestStatus.deleteAllContacts.successful;
         state.info = action.payload;
       })
       .addCase(deleteContacts.rejected, (state, action) => {
-        state.status = requestStatus.deleteAllContacts.failed;
+        state.status = contactsRequestStatus.deleteAllContacts.failed;
         state.error = {
           message: action.payload,
         };

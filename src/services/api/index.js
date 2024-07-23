@@ -14,4 +14,26 @@ export const api = axios.create({
   headers: { 'content-type': 'application/json' },
 });
 
+// Add a response interceptor
+// api.interceptors.response.use(
+//   response => response, // Pass through successful responses
+//   error => {
+//     // Check if the error is for the specific endpoint
+//     if (
+//       error.response &&
+//       error.response.status === 404 &&
+//       error.config.url.endsWith('/contacts')
+//     ) {
+//       // Create a custom error message for 404 errors on the /contacts endpoint
+//       const customError = new Error(
+//         "sssLooks like you haven't added any contacts yet."
+//       );
+//       customError.response = error.response;
+//       return Promise.reject(customError);
+//     }
+//     // For other errors, reject the promise with the error
+//     return Promise.reject(error);
+//   }
+// );
+
 export default api;

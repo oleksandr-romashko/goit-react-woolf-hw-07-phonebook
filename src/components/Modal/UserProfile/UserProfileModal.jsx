@@ -2,10 +2,13 @@ import ReactDom from 'react-dom';
 import { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { rootPersistConfig } from 'store/store';
 import { deleteContacts } from 'store/contacts/operations';
+import { deleteCurrentUser } from 'store/user/operations';
 import { setDoNotShowDisclaimerAgainAction } from 'store/application/slice';
-import { setIsUserProfileModalOpenAction } from 'store/modals/slice';
+import { profileRequestStatus, setProfileStatusAction } from 'store/profile/slice';
 import { selectDoNotShowDisclaimerAgain } from 'store/application/selectors';
+import { selectProfileStatus } from 'store/profile/selectors';
 import { selectUserKey, selectUserUuid } from 'store/user/selectors';
 import {
   selectContacts,
@@ -16,13 +19,14 @@ import {
   selectIsDeleteAllContactsSuccessful,
   selectLoading
 } from 'store/contacts/selectors';
+import { setIsUserProfileModalOpenAction } from 'store/modals/slice';
 
 import { REMOVE_ALL_DATA_BTN_TEXT } from 'constants/buttonsTexts';
 
-import Modal from '../Modal';
 import InteractiveInput from 'components/Input/InteractiveInput';
 import Spinner from 'components/Loader/Spinner';
 import { ICON_NAME } from 'components/Icon/Icon';
+import Modal from '../Modal';
 import ConfirmDialogueBoxModal from '../ConfirmDialogBox/ConfirmDialogueBoxModal';
 import { ProfileWrapper, UserProfileForm, SECTION, InfoText } from './UserProfileModal.styled';
 import Button, { BUTTON_STYLE } from 'components/Button/BasicButton.styled';
@@ -48,6 +52,8 @@ const UserProfileModal = () => {
   const userUuid = useSelector(selectUserUuid);
   const userKey = useSelector(selectUserKey);
 
+  const profileDeleteStatus = useSelector(selectProfileStatus);
+   
   /**
    * State to show or hide user key.
    */
@@ -71,25 +77,36 @@ const UserProfileModal = () => {
   }
   
   /**
-   * WIP: Deletes all data related to the user, both on back end and locally.
+   * Deletes all data related to the user, both on back end and locally.
    */
-  const handleClearAllDataClick = () => {
+  const handleClearAllDataClick = async () => {
     setIsRemoveAllDataDialogueOpen(false);
-    // try remove contacts from back end
-    dispatch(deleteContacts(contacts));
+     try {
+        // Dispatch deleteContacts and wait for it to complete
+        const deleteContactsResult = await dispatch(deleteContacts(contacts)).unwrap();
 
-    // try remove user from back end
-    
-    // remove local data from user browser
+        if (deleteContactsResult.rejected.length === 0) {
+          // Dispatch deleteCurrentUser and wait for it to complete
+          const deleteUserResult = await dispatch(deleteCurrentUser()).unwrap();
 
-    // localStorage.removeItem(`persist:${rootPersistConfig.key}`);
+          // Remove local data from user browser
+          localStorage.removeItem(`persist:${rootPersistConfig.key}`);
+
+          dispatch(setProfileStatusAction(profileRequestStatus.deleteUser.successful));
+        }
+      } catch (error) {
+        // Handle any errors that occur during deletion
+        console.error("An error occurred while clearing data:", error.message);
+      }
   }
   
   /**
    * Handles setting to show or hide disclaimer modal at start.
    */
   const handleToggleDoNowShowAgain = () => {
-    dispatch(setDoNotShowDisclaimerAgainAction(!isDoNotShowAgain))
+    if (!profileDeleteStatus) {
+      dispatch(setDoNotShowDisclaimerAgainAction(!isDoNotShowAgain))
+    }
   }
 
   const handleModalClose = useCallback(() => {
@@ -147,9 +164,12 @@ const UserProfileModal = () => {
         <SECTION>
           <details>
             <summary>Danger Zone</summary>
+            <p className='normal-black-text'>
+              You may delete all data related to your account from this app:
+            </p>
             <Button
               className={`profile-remove-all-data-btn ${BUTTON_STYLE.DANGER}`}
-              onClick={() => setIsRemoveAllDataDialogueOpen(true)}>
+              onClick={() => !profileDeleteStatus && setIsRemoveAllDataDialogueOpen(true)}>
               {isDeleteAllLoading && loading ? (
                 <>
                   <Spinner />
@@ -178,6 +198,12 @@ const UserProfileModal = () => {
                     ? 'contact' : 'contacts'}.</span>}
               </>
               }
+            </InfoText>
+             <InfoText
+              className='success'
+              data-info-show={profileDeleteStatus ? true : false}
+            >
+              Your profile has already been deleted.
             </InfoText>
             <InfoText data-info-show={error && isDeleteAllError}>
               Ouch. Our system is under too much stress. Some contacts may not have been deleted. Please refresh this page and try to delete all data again later.

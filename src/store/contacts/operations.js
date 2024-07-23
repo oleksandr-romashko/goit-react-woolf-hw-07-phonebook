@@ -25,6 +25,11 @@ export const syncContacts = createAsyncThunk(
         thunkAPI.dispatch(setContactsAction(fetchedContacts));
       }
     } catch (error) {
+      if (error.response && error.response.status === 404) {
+        // workaroung mockapi 404 error when empty sub endpoint = no contacts
+        thunkAPI.dispatch(setContactsAction([]));
+        return;
+      }
       const errorMessage =
         (error.response &&
           error.response.status + ' ' + error.response.statusText) ||
@@ -48,9 +53,8 @@ export const fetchContacts = createAsyncThunk(
       return response.data;
     } catch (error) {
       if (error.response && error.response.status === 404) {
-        return thunkAPI.rejectWithValue(
-          "Looks like you haven't added any contacts yet."
-        );
+        // workaroung mockapi 404 error when empty sub endpoint = no contacts
+        return thunkAPI.fulfillWithValue([]);
       }
       const errorMessage =
         (error.response &&
@@ -141,62 +145,67 @@ export const deleteContactById = createAsyncThunk(
 );
 
 /**
- * Deletes all contacts.
+ * Deletes provided contacts.
  */
 export const deleteContacts = createAsyncThunk(
   'contacts/deleteContacts',
   async (contactsToDelete, thunkAPI) => {
-    await prepareRequestUser(thunkAPI);
-    await thunkAPI.dispatch(syncContacts());
-
-    if (!contactsToDelete.length) {
-      // Return results to the reducer
+    const { status: profileDeleteStatus } = thunkAPI.getState().profile;
+    if (profileDeleteStatus) {
       return {
-        empty: 'It looks like there are no contacts to delete.',
+        empty: 'Your profile has already been deleted.',
       };
     }
 
-    const { id: userId } = thunkAPI.getState().user;
-
-    const deletePromises = contactsToDelete.map((contact, index) => {
-      return new Promise((resolve, reject) => {
-        setTimeout(async () => {
-          try {
-            await api.delete(`/users/${userId}/contacts/${contact.id}`);
-            resolve({ status: 'fulfilled', contact });
-          } catch (error) {
-            if (error.response && error.response.status === 429) {
-              thunkAPI.rejectWithValue({
-                status: 'rejected',
-                contact,
-                message:
-                  'Ouch. Our system is under too much stress. Some contacts may not have been deleted. Please refresh this page and try to delete all data again later.',
-              });
-            } else {
-              thunkAPI.rejectWithValue({
-                status: 'rejected',
-                contact,
-                message: error.message,
-              });
-            }
-            reject({ status: 'rejected', contact, message: error.message });
-          }
-        }, 300 * index); // Adds delay not to fall into 429 'Too many requests' error.
-      });
-    });
-
-    // Wait for all promises to settle
-    const results = await Promise.all(deletePromises);
-
-    // synch contacts changes
+    await prepareRequestUser(thunkAPI);
     await thunkAPI.dispatch(syncContacts());
 
-    // Process results
-    const fulfilled = results.filter(result => result.status === 'fulfilled');
-    const rejected = results.filter(result => result.status === 'rejected');
+    const { id: userId } = thunkAPI.getState().user;
 
-    // Return results to the reducer
-    return { fulfilled, rejected };
+    // Function to delete a single contact with retry logic
+    const deleteContact = async (contact, index) => {
+      try {
+        // Delay added to avoid 429 errors
+        await new Promise(resolve => setTimeout(resolve, 300 * index));
+        await api.delete(`/users/${userId}/contacts/${contact.id}`);
+        return { status: 'fulfilled', contact };
+      } catch (error) {
+        throw new Error(
+          error.response?.status === 429
+            ? 'Ouch. Our system is under too much stress. ' +
+              'Some contacts may not have been deleted. ' +
+              'Please refresh this page and try to delete all data again later.'
+            : error.message
+        );
+      }
+    };
+
+    // Create array of delete promises
+    const deletePromises = contactsToDelete.map((contact, index) =>
+      deleteContact(contact, index)
+    );
+
+    try {
+      // Wait for all promises to settle
+      const results = await Promise.all(deletePromises);
+
+      // Process results
+      const fulfilled = results.filter(result => result.status === 'fulfilled');
+      const rejected = results.filter(result => result.status === 'rejected');
+
+      return { fulfilled, rejected };
+    } catch (error) {
+      // If any promise fails, process errors
+      const errorMessage =
+        error.message || 'An error occurred while deleting contacts.';
+      return thunkAPI.rejectWithValue({
+        status: 'rejected',
+        message: errorMessage,
+      });
+    } finally {
+      // synch contacts changes
+      await thunkAPI.dispatch(syncContacts());
+    }
   }
 );
 
@@ -226,7 +235,7 @@ const areContactsEqual = (currentContacts, fetchedContacts) => {
   return currentContacts.every((currentContact, index) => {
     const fetchedContact = fetchedContacts[index];
 
-    // Compare each property
+    // Compare each property of the arrays
     return (
       currentContact.id === fetchedContact.id &&
       currentContact.name === fetchedContact.name &&

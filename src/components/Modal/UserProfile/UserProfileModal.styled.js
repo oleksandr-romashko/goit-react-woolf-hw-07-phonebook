@@ -89,7 +89,13 @@ export const SECTION = styled('section')({
     minWidth: '100%',
     maxWidth: '300px',
     borderRadius: '5px',
-    color: 'var(--color-accent-red-dark)',
+    color: 'var(--color-accent-red-normal)',
+
+    '& p.normal-black-text': {
+      marginLeft: '16px',
+      marginRight: '16px',
+      color: 'var(--color-basic-black)',
+    },
 
     '& summary': {
       paddingTop: '6px',
@@ -109,15 +115,16 @@ export const SECTION = styled('section')({
       marginTop: '6px',
       marginBottom: '8px',
       marginLeft: '16px',
-      minWidth: '176px',
+      marginRight: '16px',
+      minWidth: '152px',
       '@media screen and (min-width: 420px)': {
-        minWidth: '184px',
+        minWidth: '160px',
       },
       '@media screen and (min-width: 576px)': {
-        minWidth: '208px',
+        minWidth: '180px',
       },
       '@media screen and (min-width: 768px)': {
-        minWidth: '220px',
+        minWidth: '196px',
       },
     },
   },

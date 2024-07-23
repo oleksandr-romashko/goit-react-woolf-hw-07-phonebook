@@ -1,5 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { requestStatus } from './slice';
+import { contactsRequestStatus } from './slice';
 
 /**
  * Selector to obtain contacts list.
@@ -44,7 +44,9 @@ export const selectInfo = state => state.contacts.info;
 export const selectIsFormLoading = createSelector(
   [selectLoading, selectStatus],
   (loading, status) => {
-    return loading && status && status === requestStatus.addContact.pending;
+    return (
+      loading && status && status === contactsRequestStatus.addContact.pending
+    );
   }
 );
 
@@ -56,7 +58,11 @@ export const selectIsFormLoading = createSelector(
 export const selectIsContactDeleteInProgress = createSelector(
   [selectLoading, selectStatus],
   (loading, status) => {
-    return loading && status && status === requestStatus.deleteContact.pending;
+    return (
+      loading &&
+      status &&
+      status === contactsRequestStatus.deleteContact.pending
+    );
   }
 );
 
@@ -68,7 +74,9 @@ export const selectIsContactDeleteInProgress = createSelector(
 export const selectIsDeleteError = createSelector(
   [selectStatus, selectError],
   (status, isError) => {
-    return isError && status && status === requestStatus.deleteContact.failed;
+    return (
+      isError && status && status === contactsRequestStatus.deleteContact.failed
+    );
   }
 );
 
@@ -81,7 +89,9 @@ export const selectIsAllContactsDeleteInProgress = createSelector(
   [selectLoading, selectStatus],
   (loading, status) => {
     return (
-      loading && status && status === requestStatus.deleteAllContacts.pending
+      loading &&
+      status &&
+      status === contactsRequestStatus.deleteAllContacts.pending
     );
   }
 );
@@ -94,7 +104,9 @@ export const selectIsAllContactsDeleteInProgress = createSelector(
 export const selectIsDeleteAllContactsSuccessful = createSelector(
   [selectStatus],
   status => {
-    return status && status === requestStatus.deleteAllContacts.successful;
+    return (
+      status && status === contactsRequestStatus.deleteAllContacts.successful
+    );
   }
 );
 
@@ -107,7 +119,9 @@ export const selectIsDeleteAllContactsError = createSelector(
   [selectStatus, selectError],
   (status, isError) => {
     return (
-      isError && status && status === requestStatus.deleteAllContacts.failed
+      isError &&
+      status &&
+      status === contactsRequestStatus.deleteAllContacts.failed
     );
   }
 );

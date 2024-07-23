@@ -29,17 +29,12 @@ import Loader from 'components/Loader/Loader';
 import Spinner from 'components/Loader/Spinner';
 import { List, Item, InfoText } from './ContactList.styled';
 import ConfirmDialogueBoxModal from 'components/Modal/ConfirmDialogBox/ConfirmDialogueBoxModal';
-import { TextMessage } from 'components/Message/TextMessage.styled';
+import TextMessage from 'components/Message/TextMessage';
 
 /**
  * Polling interval for polling strategy to receive contact list updates.
  */
 const POLLING_INTERVAL = 30000;
-
-/**
- * Info error status messages.
- */
-const INFO_ERROR_PREFIX = 'Oops! Sorry, but something went wrong';
 
 /**
  * Component to contain the list of contact items.
@@ -105,12 +100,20 @@ const ContactList = () => {
   }
 
   if (error && !status) {
-    return <TextMessage>{error}</TextMessage>;
+    return (
+      <TextMessage>
+        <p>{error}</p>
+      </TextMessage>
+    );
   }
 
   // No contacts message
   if (!contacts.length) {
-    return "Looks like you haven't added any contacts yet.";
+    return (
+      <TextMessage>
+        <p>Looks like you haven't added any contacts yet.</p>
+      </TextMessage>
+    );
   }
 
   const filteredContacts = filterContacts(contacts, filter);
@@ -175,7 +178,6 @@ const ContactList = () => {
                 isDeleteError && error.contactId === Number(el.id)
               }
             >
-              {INFO_ERROR_PREFIX}
               {error && error.message && `: ${error.message}`}
             </InfoText>
           </Item>

@@ -13,9 +13,9 @@ const Page = styled('div')({
     marginBottom: '40px',
   },
 
-  '& .page-error-message': {
-    paddingLeft: '8px',
-    paddingRight: '8px',
+  '& .page-message': {
+    marginLeft: '8px',
+    marginRight: '8px',
   },
 });
 

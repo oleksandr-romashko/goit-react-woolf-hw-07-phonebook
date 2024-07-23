@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import isEqual from 'lodash.isequal';
 
 import {
+  profileRequestStatus,
   setProfileErrorAction,
   setProfileLoadingAction,
 } from 'store/profile/slice';
@@ -58,12 +59,28 @@ export const createUser = createAsyncThunk(
 );
 
 /**
- * Deletes user with all its contacts and data.
+ * Deletes current user.
  */
-export const deleteUser = createAsyncThunk(
+export const deleteCurrentUser = createAsyncThunk(
   'user/deleteUser',
   async (_, thunkAPI) => {
-    // TODO: Add user deletion
+    await prepareRequestUser(thunkAPI);
+
+    try {
+      const { id: userId } = thunkAPI.getState().user;
+      const response = await api.delete(`users/${userId}`);
+      return response.data;
+    } catch (error) {
+      if (error.response.status === 404) {
+        return thunkAPI.rejectWithValue('User not found. Unable to delete.');
+      } else {
+        const errorMessage =
+          (error.response &&
+            error.response.status + ' ' + error.response.statusText) ||
+          error.message;
+        return thunkAPI.rejectWithValue(errorMessage);
+      }
+    }
   }
 );
 
