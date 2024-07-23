@@ -124,10 +124,6 @@ const UserProfileModal = () => {
     >
       <ProfileWrapper>
         <UserProfileForm>
-          {/* <p>
-            You may share your unique user identifier and verification key with others, and they will be able to see and manage your contacts as well.
-          </p> */}
-
           <InteractiveInput
             className='user-identifier-input'
             name={'user-uuid'}
