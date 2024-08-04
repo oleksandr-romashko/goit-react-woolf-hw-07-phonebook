@@ -74,6 +74,13 @@ const Button = styled('button')({
   '&.accent-blue': {
     color: 'var(--color-basic-white)',
     backgroundColor: 'var(--color-accent-blue-dark)',
+    '&:hover': {
+      backgroundColor: 'var(--color-accent-blue-light)',
+    },
+
+    '& > .spinner .spinner-dot': {
+      backgroundColor: 'var(--color-basic-white)',
+    },
   },
   '&.black': {
     color: 'var(--color-basic-white)',
@@ -98,6 +105,20 @@ const Button = styled('button')({
 
     '& > .spinner .spinner-dot': {
       backgroundColor: 'var(--color-basic-white)',
+    },
+  },
+
+  '&[disabled]': {
+    backgroundColor: 'var(--color-accent-blue-light)',
+    cursor: 'default',
+
+    '&:hover': {
+      backgroundColor: 'var(--color-accent-blue-light)',
+    },
+
+    '&:active': {
+      background: 'var(--color-accent-blue-light)',
+      border: '1px solid var(--color-basic-grey)',
     },
   },
 
