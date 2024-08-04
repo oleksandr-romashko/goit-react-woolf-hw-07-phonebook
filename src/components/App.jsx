@@ -8,7 +8,9 @@ import {
 } from 'store/modals/slice';
 import { selectDoNotShowDisclaimerAgain } from 'store/application/selectors';
 import {
-  selectProfileError, selectProfileLoading, selectProfileStatus
+  selectProfileLoading,
+  selectProfileError,
+  selectIsProfileUserDeleted,
 } from 'store/profile/selectors';
 import { selectUserId } from 'store/user/selectors';
 import {
@@ -41,7 +43,7 @@ const App = () => {
 
   const doNotShowDisclaimerFlag = useSelector(selectDoNotShowDisclaimerAgain);
   
-  const profileIsDeletedStatus = useSelector(selectProfileStatus);
+  const profileIsDeletedStatus = useSelector(selectIsProfileUserDeleted);
 
   /**
    * Setting to show or hide disclaimer modal at start.
@@ -119,7 +121,7 @@ const App = () => {
             </HeaderControls>
           </Header>
           {loading && <Loader text={loading.message || 'Loading user profile data'} />}
-          {error &&
+          {!profileIsDeletedStatus && error &&
             <TextMessage className='page-message'>
               <p>{error}</p>
               <p className='secondary'>I would love to read your thoughts, questions, issues, typos, and anything else you feel like sharing with me.</p>

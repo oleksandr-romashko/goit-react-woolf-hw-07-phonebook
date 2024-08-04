@@ -4,7 +4,7 @@ export const ProfileWrapper = styled('div')({
   width: '100%',
   display: 'flex',
   flexDirection: 'column',
-  gap: '28px',
+  gap: '32px',
 
   '& .profile-remove-all-data-btn': {
     width: 'fit-content',
@@ -18,9 +18,17 @@ export const UserProfileForm = styled('form')({
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'flex-start',
-  rowGap: '16px',
 
-  '& .user-identifier-input, & .user-key-input': {
+  '& .user-form-element': {
+    marginTop: '12px',
+  },
+
+  '& label .label-text': {
+    marginTop: '12px',
+    fontWeight: 500,
+  },
+
+  '& .user-input': {
     minWidth: '276px',
 
     '@media screen and (min-width: 420px)': {
@@ -41,20 +49,59 @@ export const UserProfileForm = styled('form')({
       display: 'block',
     },
   },
-});
 
-export const ProfileFormActions = styled('div')({
-  display: 'flex',
-  gap: '12px',
-  flexWrap: 'wrap',
+  '& .user-form-warnings .show-warning': {
+    marginTop: '16px',
+    marginBottom: '4px',
+  },
 
-  '& .form-edit-btn, & .form-submit-btn, & .form-cancel-btn': {
-    width: 'fit-content',
-    minWidth: '144px',
+  '&:not([data-edited]) .js-edited-show, &[data-edited] .js-edited-hide': {
+    display: 'none',
+  },
+
+  '&:not([data-edited]) .js-edited-hide, &[data-edited] .js-edited-show': {
+    display: 'flex',
   },
 });
 
-export const SECTION = styled('section')({
+export const ProfileFormActionsWrapper = styled('div')({
+  display: 'flex',
+  columnGap: '8px',
+
+  '@media screen and (min-width: 420px)': {
+    columnGap: '10px',
+  },
+  '@media screen and (min-width: 576px)': {
+    columnGap: '12px',
+  },
+  '@media screen and (min-width: 768px)': {
+    columnGap: '14px',
+  },
+
+  '& button > svg': {
+    marginRight: '7px',
+    width: '14px',
+    height: '14px',
+
+    '@media screen and (min-width: 420px)': {
+      marginRight: '6px',
+      width: '15px',
+      height: '15px',
+    },
+    '@media screen and (min-width: 576px)': {
+      marginRight: '6px',
+      width: '17px',
+      height: '17px',
+    },
+    '@media screen and (min-width: 768px)': {
+      marginRight: '6px',
+      width: '18px',
+      height: '18px',
+    },
+  },
+});
+
+export const Section = styled('section')({
   '& > p:first-child ': {
     marginBottom: '12px',
     fontWeight: 500,
@@ -134,29 +181,43 @@ export const SECTION = styled('section')({
  * Informational text about delete operation results.
  */
 export const InfoText = styled('p')({
-  marginLeft: '16px',
-  maxHeight: '0',
-  opacity: '0',
-  marginTop: '8px',
+  maxHeight: 0,
+  opacity: 0,
+  margin: 0,
   fontSize: '14px',
   fontWeight: 400,
   lineHeight: '14px',
   transition: 'opacity 280ms ease-in-out, max-height 480ms ease-in-out',
 
+  // prevent text select
+  '-webkit-user-select': 'none' /* Safari */,
+  '-ms-user-select': 'none' /* IE 10 and IE 11 */,
+  'user-select': 'none' /* Standard syntax */,
+
   '@media screen and (min-width: 420px)': {
     fontSize: '16px',
     lineHeight: '16px',
   },
-  '@media screen and (min-width: 576px)': {
-    marginLeft: '18px',
+
+  '&.danger-error': {
+    marginLeft: '16px',
+
+    '@media screen and (min-width: 576px)': {
+      marginLeft: '18px',
+    },
   },
 
   '&[data-info-show="true"]': {
     maxHeight: '300px',
-    opacity: '1',
+    opacity: 1,
+    marginTop: '8px',
   },
 
   '&.success': {
     color: 'green',
+  },
+
+  '&.fail': {
+    color: 'red',
   },
 });

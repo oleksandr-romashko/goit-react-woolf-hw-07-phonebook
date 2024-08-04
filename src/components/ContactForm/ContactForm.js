@@ -10,7 +10,7 @@ import {
 import { setFilterAction } from 'store/filter/slice';
 import {
   rejectContactAddWhenExistsAction,
-  contactsRequestStatus,
+  CONTACTS_REQUEST_STATUS,
 } from 'store/contacts/slice';
 import { addContact } from 'store/contacts/operations';
 
@@ -47,7 +47,7 @@ const ContactForm = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (status === contactsRequestStatus.addContact.successful) {
+    if (status === CONTACTS_REQUEST_STATUS.addContact.successful) {
       document.getElementById('add-form').reset();
     }
   }, [status, dispatch]);
@@ -132,16 +132,16 @@ const ContactForm = () => {
         <InfoText
           className={
             status &&
-            ((status === contactsRequestStatus.addContact.successful &&
+            ((status === CONTACTS_REQUEST_STATUS.addContact.successful &&
               'success') ||
               (status &&
-                status === contactsRequestStatus.addContact.failed &&
+                status === CONTACTS_REQUEST_STATUS.addContact.failed &&
                 'failure'))
           }
-          data-info-show={
+          data-show-condition={
             (status &&
-              (status === contactsRequestStatus.addContact.successful ||
-                status === contactsRequestStatus.addContact.failed)) ||
+              (status === CONTACTS_REQUEST_STATUS.addContact.successful ||
+                status === CONTACTS_REQUEST_STATUS.addContact.failed)) ||
             false
           }
         >

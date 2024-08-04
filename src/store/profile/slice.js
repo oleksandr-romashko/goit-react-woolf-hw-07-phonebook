@@ -1,8 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export const profileRequestStatus = Object.freeze({
-  deleteUser: {
-    successful: 'deleteContacts/successful',
+export const PROFILE_REQUEST_STATUS = Object.freeze({
+  updateUserData: {
+    pending: 'updateUserData/pending',
+    successful: 'updateUserData/successful',
+    failed: 'updateUserData/failed',
+  },
+  deleteCurrentUser: {
+    pending: 'deleteCurrentUser/inProgress',
+    successful: 'deleteCurrentUser/successful',
+    failed: 'deleteCurrentUser/failed',
   },
 });
 

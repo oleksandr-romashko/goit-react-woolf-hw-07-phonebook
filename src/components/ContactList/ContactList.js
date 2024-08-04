@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   selectContacts,
   selectStatus,
-  selectLoading,
+  selectContactsLoading,
   selectIsContactDeleteInProgress,
   selectError,
   selectIsDeleteError,
@@ -46,7 +46,7 @@ const ContactList = () => {
 
   const contacts = useSelector(selectContacts);
   const status = useSelector(selectStatus);
-  const loading = useSelector(selectLoading);
+  const loading = useSelector(selectContactsLoading);
   const isDeleteLoading = useSelector(selectIsContactDeleteInProgress);
   const error = useSelector(selectError);
   const isDeleteError = useSelector(selectIsDeleteError);

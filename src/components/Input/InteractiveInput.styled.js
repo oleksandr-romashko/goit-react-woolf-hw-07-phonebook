@@ -10,7 +10,16 @@ export const InputWrapper = styled('div')({
     marginTop: '4px',
   },
   '&.copyable': {
-    paddingRight: '35px',
+    paddingRight: '30px',
+    '@media screen and (min-width: 420px)': {
+      paddingRight: '32px',
+    },
+    '@media screen and (min-width: 576px)': {
+      paddingRight: '34px',
+    },
+    '@media screen and (min-width: 768px)': {
+      paddingRight: '35px',
+    },
   },
 });
 
@@ -25,10 +34,20 @@ export const StyledInput = styled(Input)({
   borderColor: 'var(--color-basic-grey-darker)',
   backgroundColor: 'var(--color-pure-white)',
   '&.with-action:not([disabled])': {
-    paddingRight: '32px',
+    paddingRight: '30px',
+    '@media screen and (min-width: 420px)': {
+      paddingRight: '32px',
+    },
+    '@media screen and (min-width: 576px)': {
+      paddingRight: '34px',
+    },
+    '@media screen and (min-width: 768px)': {
+      paddingRight: '35px',
+    },
   },
   '&[disabled]': {
-    borderColor: 'var(--color-basic-grey)',
+    color: 'var(--color-basic-grey-darker)',
+    borderColor: 'var(--color-basic-grey-light)',
     backgroundColor: 'var(--color-basic-white)',
   },
 

@@ -59,9 +59,9 @@ const ConfirmDialogueBoxModal = (
       <div>
         {message && <p className='modal-message'>{message}</p>}
         {details && <p className='modal-details'>{details}</p>}
-        {warningMessage && 
+        {warningMessage &&
           <WarningWrapper>
-            <WarningMessage className='warning-message'>
+            <WarningMessage data-show-condition={!!warningMessage}>
               {warningMessage}
             </WarningMessage>
           </WarningWrapper>

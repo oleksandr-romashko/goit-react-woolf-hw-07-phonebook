@@ -2,8 +2,10 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import isEqual from 'lodash.isequal';
 
 import {
-  setProfileErrorAction,
+  PROFILE_REQUEST_STATUS,
+  setProfileStatusAction,
   setProfileLoadingAction,
+  setProfileErrorAction,
 } from 'store/profile/slice';
 
 import api from 'services/api';
@@ -11,6 +13,7 @@ import api from 'services/api';
 import { REMOVE_ALL_DATA_BTN_TEXT } from 'constants/buttonsTexts';
 import { rootPersistConfig } from 'store/store';
 import { rehydrateUserStateAction } from './slice';
+import { setDoNotShowDisclaimerAgainAction } from 'store/application/slice';
 
 /**
  * Validates user data.
@@ -23,7 +26,8 @@ export const validateUser = createAsyncThunk(
         setProfileLoadingAction({ message: 'Validating user profile data' })
       );
       const { id, uuid, key } = thunkAPI.getState().user;
-      await validateCredentials({ id, uuid, key });
+      const isValidUser = await validateUserCredentials({ id, uuid, key });
+      return isValidUser;
     } catch (error) {
       thunkAPI.dispatch(setProfileErrorAction(error.message));
       return thunkAPI.rejectWithValue(error.message);
@@ -58,44 +62,187 @@ export const createUser = createAsyncThunk(
 );
 
 /**
- * Deletes current user.
+ * Change current user.
  */
-export const deleteCurrentUser = createAsyncThunk(
-  'user/deleteUser',
-  async (_, thunkAPI) => {
-    await prepareRequestUser(thunkAPI);
+export const switchUser = createAsyncThunk(
+  'user/switchUser',
+  async ({ uuid, key }, thunkAPI) => {
+    thunkAPI.dispatch(setProfileErrorAction(null));
+    thunkAPI.dispatch(setProfileLoadingAction(true));
+    thunkAPI.dispatch(
+      setProfileStatusAction(PROFILE_REQUEST_STATUS.updateUserData.pending)
+    );
 
     try {
-      const { id: userId } = thunkAPI.getState().user;
-      const response = await api.delete(`users/${userId}`);
-      return response.data;
+      const response = await api.get('users', {
+        params: { uuid, key },
+      });
+
+      if (response?.data.length) {
+        const id = response.data[0]?.id;
+        thunkAPI.dispatch(
+          setProfileStatusAction(
+            PROFILE_REQUEST_STATUS.updateUserData.successful
+          )
+        );
+        switchOffUserFormEdit();
+        thunkAPI.dispatch(setDoNotShowDisclaimerAgainAction(false));
+        return thunkAPI.fulfillWithValue({ id, uuid, key });
+      }
     } catch (error) {
-      if (error.response.status === 404) {
-        return thunkAPI.rejectWithValue('User not found. Unable to delete.');
+      if (error.response?.status === 404) {
+        const errorMessage =
+          'User not found or verification key is not valid. Unable to switch user';
+        thunkAPI.dispatch(setProfileErrorAction(errorMessage));
+        thunkAPI.dispatch(
+          setProfileStatusAction(PROFILE_REQUEST_STATUS.updateUserData.failed)
+        );
+        return thunkAPI.rejectWithValue(errorMessage);
       } else {
         const errorMessage =
           (error.response &&
-            error.response.status + ' ' + error.response.statusText) ||
+            error.response.status + ' ' + error.response?.statusText) ||
           error.message;
+        thunkAPI.dispatch(
+          setProfileStatusAction(PROFILE_REQUEST_STATUS.updateUserData.failed)
+        );
         return thunkAPI.rejectWithValue(errorMessage);
       }
+    } finally {
+      thunkAPI.dispatch(setProfileLoadingAction(false));
     }
   }
 );
 
 /**
- * Executes preparation for request by synchronizing and checking user data.
- * @param {payloadCreator} thunkAPI
+ * Updates current user validation key.
+ */
+export const updateUserKey = createAsyncThunk(
+  'user/updateUserKey',
+  async (userKey, thunkAPI) => {
+    thunkAPI.dispatch(setProfileErrorAction(null));
+    thunkAPI.dispatch(setProfileLoadingAction(true));
+    thunkAPI.dispatch(
+      setProfileStatusAction(PROFILE_REQUEST_STATUS.updateUserData.pending)
+    );
+
+    try {
+      // Prepare request and handle possible rejection if current user is not valid.
+      const prepareResult = await prepareRequestUser(thunkAPI);
+      const { id: userId } = thunkAPI.getState().user;
+
+      if (!prepareResult?.payload) {
+        // Current user data are valid -> make request to backend for the key change
+        // Use PUT request PATCH requests are blocked by server CORS policy, i.e.use put request
+        await api.put(`users/${userId}`, { key: userKey });
+      }
+
+      thunkAPI.dispatch(
+        setProfileStatusAction(PROFILE_REQUEST_STATUS.updateUserData.successful)
+      );
+      switchOffUserFormEdit();
+
+      return thunkAPI.fulfillWithValue(userKey);
+    } catch (error) {
+      if (error.response?.status === 404) {
+        const errorMessage =
+          'User or its validation key not found. Unable to update user key.';
+        thunkAPI.dispatch(setProfileErrorAction(errorMessage));
+        thunkAPI.dispatch(
+          setProfileStatusAction(PROFILE_REQUEST_STATUS.updateUserData.failed)
+        );
+        return thunkAPI.rejectWithValue(errorMessage);
+      } else {
+        const errorMessage =
+          (error.response &&
+            error.response.status + ' ' + error.response?.statusText) ||
+          error.message;
+        thunkAPI.dispatch(
+          setProfileStatusAction(PROFILE_REQUEST_STATUS.updateUserData.failed)
+        );
+        return thunkAPI.rejectWithValue(errorMessage);
+      }
+    } finally {
+      thunkAPI.dispatch(setProfileLoadingAction(false));
+    }
+  }
+);
+
+/**
+ * Deletes current user.
+ */
+export const deleteCurrentUser = createAsyncThunk(
+  'user/deleteUser',
+  async (_, thunkAPI) => {
+    thunkAPI.dispatch(setProfileLoadingAction(true));
+    thunkAPI.dispatch(
+      setProfileStatusAction(PROFILE_REQUEST_STATUS.deleteCurrentUser.pending)
+    );
+
+    try {
+      await prepareRequestUser(thunkAPI);
+      const { id: userId } = thunkAPI.getState().user;
+      const response = await api.delete(`users/${userId}`);
+      thunkAPI.dispatch(
+        setProfileStatusAction(
+          PROFILE_REQUEST_STATUS.deleteCurrentUser.successful
+        )
+      );
+      return response.data;
+    } catch (error) {
+      if (error.response.status === 404) {
+        const errorMessage = 'User not found. Unable to delete.';
+        thunkAPI.dispatch(setProfileErrorAction(errorMessage));
+        thunkAPI.dispatch(
+          setProfileStatusAction(
+            PROFILE_REQUEST_STATUS.deleteCurrentUser.failed
+          )
+        );
+        return thunkAPI.rejectWithValue(errorMessage);
+      } else {
+        const errorMessage =
+          (error.response &&
+            error.response.status + ' ' + error.response.statusText) ||
+          error.message;
+        thunkAPI.dispatch(setProfileErrorAction(errorMessage));
+        thunkAPI.dispatch(
+          setProfileStatusAction(
+            PROFILE_REQUEST_STATUS.deleteCurrentUser.failed
+          )
+        );
+
+        return thunkAPI.rejectWithValue(errorMessage);
+      }
+    } finally {
+      thunkAPI.dispatch(setProfileLoadingAction(false));
+    }
+  }
+);
+
+/**
+ * Executes preparation for request by synchronizing storage and checking user data.
+ * @param {object} thunkAPI The thunk API object provided by createAsyncThunk.
  * @throws {Error} Error in case of unsatisfactory data of failed request.
  */
 export const prepareRequestUser = async thunkAPI => {
   try {
+    // Rehydrate user data from persistent storage
     rehydrateUserData(thunkAPI);
-    await validateCredentials(thunkAPI.getState().user);
+
+    // Validate user credentials
+    const isValidUser = await validateUserCredentials(thunkAPI.getState().user);
+
+    // Check if user data is valid
+    if (!isValidUser) {
+      const errorMessage =
+        'It looks like your user data is not valid or no longer valid and needs updating. You can try refreshing this page or you can update your user data with valid information in your user profile.';
+      throw new Error(errorMessage);
+    }
   } catch (error) {
     thunkAPI.dispatch(setProfileErrorAction(error.message));
     return thunkAPI.rejectWithValue(error.message);
   }
+  return true;
 };
 
 /**
@@ -104,17 +251,14 @@ export const prepareRequestUser = async thunkAPI => {
  * as valid keys and acceptable as equal.
  * @throws {Error} Error with message if user did not pass validation.
  */
-export const validateCredentials = async user => {
+const validateUserCredentials = async user => {
   try {
     const response = await api.get(`/users/${user.id}`);
     if (
       response.data.uuid !== user.uuid ||
-      (response.data.key.length && response.data.key !== user.key)
+      (response.data.key.length > 0 && response.data.key !== user.key)
     ) {
-      const errorMessage =
-        'Your user credentials are no longer valid. You can update them in your user profile.';
-      const customError = new Error(errorMessage);
-      throw customError;
+      return false;
     }
     return true;
   } catch (error) {
@@ -173,3 +317,19 @@ export const rehydrateUserData = thunkAPI => {
     thunkAPI.dispatch(rehydrateUserStateAction(localStorageUserData));
   }
 };
+
+/**
+ * Makes profile user form not editable
+ */
+function switchOffUserFormEdit() {
+  const form = document.getElementById('profile-user-data-form');
+
+  const editAttribute = 'data-edited';
+  form.removeAttribute(editAttribute);
+
+  const userUuidEl = form.elements['user-uuid'];
+  const userKeyEl = form.elements['user-key'];
+
+  userUuidEl.setAttribute('disabled', '');
+  userKeyEl.setAttribute('disabled', '');
+}

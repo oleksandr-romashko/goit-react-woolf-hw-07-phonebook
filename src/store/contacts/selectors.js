@@ -1,5 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { contactsRequestStatus } from './slice';
+import { CONTACTS_REQUEST_STATUS } from './slice';
 
 /**
  * Selector to obtain contacts list.
@@ -20,7 +20,7 @@ export const selectStatus = state => state.contacts.status;
  * @param {object} state Global app state.
  * @returns {func} Loading status selector.
  */
-export const selectLoading = state => state.contacts.loading;
+export const selectContactsLoading = state => state.contacts.loading;
 
 /**
  * Selector to obtain contacts error information.
@@ -42,10 +42,10 @@ export const selectInfo = state => state.contacts.info;
  * @returns {func} Form being loading flag selector.
  */
 export const selectIsFormLoading = createSelector(
-  [selectLoading, selectStatus],
+  [selectContactsLoading, selectStatus],
   (loading, status) => {
     return (
-      loading && status && status === contactsRequestStatus.addContact.pending
+      loading && status && status === CONTACTS_REQUEST_STATUS.addContact.pending
     );
   }
 );
@@ -56,12 +56,12 @@ export const selectIsFormLoading = createSelector(
  * @returns {func} Contact being deleting flag selector.
  */
 export const selectIsContactDeleteInProgress = createSelector(
-  [selectLoading, selectStatus],
+  [selectContactsLoading, selectStatus],
   (loading, status) => {
     return (
       loading &&
       status &&
-      status === contactsRequestStatus.deleteContact.pending
+      status === CONTACTS_REQUEST_STATUS.deleteContact.pending
     );
   }
 );
@@ -75,7 +75,9 @@ export const selectIsDeleteError = createSelector(
   [selectStatus, selectError],
   (status, isError) => {
     return (
-      isError && status && status === contactsRequestStatus.deleteContact.failed
+      isError &&
+      status &&
+      status === CONTACTS_REQUEST_STATUS.deleteContact.failed
     );
   }
 );
@@ -86,12 +88,12 @@ export const selectIsDeleteError = createSelector(
  * @returns {func} All contacts being deleting flag selector.
  */
 export const selectIsAllContactsDeleteInProgress = createSelector(
-  [selectLoading, selectStatus],
+  [selectContactsLoading, selectStatus],
   (loading, status) => {
     return (
       loading &&
       status &&
-      status === contactsRequestStatus.deleteAllContacts.pending
+      status === CONTACTS_REQUEST_STATUS.deleteAllContacts.pending
     );
   }
 );
@@ -105,7 +107,7 @@ export const selectIsDeleteAllContactsSuccessful = createSelector(
   [selectStatus],
   status => {
     return (
-      status && status === contactsRequestStatus.deleteAllContacts.successful
+      status && status === CONTACTS_REQUEST_STATUS.deleteAllContacts.successful
     );
   }
 );
@@ -121,7 +123,7 @@ export const selectIsDeleteAllContactsError = createSelector(
     return (
       isError &&
       status &&
-      status === contactsRequestStatus.deleteAllContacts.failed
+      status === CONTACTS_REQUEST_STATUS.deleteAllContacts.failed
     );
   }
 );

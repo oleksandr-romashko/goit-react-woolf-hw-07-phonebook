@@ -7,9 +7,11 @@ import { Title, WarningWrapper } from "./WarningMessage.styled"
  * @param {JSX.Element} props.children Children elements for informational message.
  * @returns {JSX.Element} Rendered WarningMessage component.
  */
-const WarningMessage = ({className, children}) => {
+const WarningMessage = (props) => {
   return (
-    <WarningWrapper className={className}>
+    <WarningWrapper
+      className={`${props.className ?? ''} ${props['data-show-condition'] ? 'show-warning' : ''}`}
+    >
       <Title>
         <Icon
           className='warning-title-icon'
@@ -17,7 +19,7 @@ const WarningMessage = ({className, children}) => {
         />
         Warning!
       </Title>
-      {children}
+      {props.children}
     </WarningWrapper>
   );
 };

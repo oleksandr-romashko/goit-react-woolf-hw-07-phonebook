@@ -66,7 +66,7 @@ const InteractiveInput = ({
 
   return (
     <Label className={copyable && 'copyable'}>
-      {label}
+      <p className='label-text'>{label}</p>
       <InputWrapper className={`js-input-wrapper ${label && 'labeled'} ${copyable && 'copyable'}`}>
         <StyledInput
           className={`${className} ${onAction && 'with-action'}`}
