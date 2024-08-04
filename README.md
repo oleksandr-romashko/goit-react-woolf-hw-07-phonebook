@@ -11,10 +11,12 @@
 
 ## Features
 
-- Add new contacts
-- Store contacts locally and view contact details
-- Filter existing contacts
-- Delete contacts
+- Store, share, and synchronize contacts between devices, available on PC, tablet, and mobile.
+- Contacts accessible to specific users with manageable access.
+- Public contact lists available for everyone.
+- Add, store, and delete your contacts.
+- Filter contacts to quickly find the one you need.
+- One-click call feature for each contact.
 
 ## Live page demo
 
