@@ -4,7 +4,7 @@
  * @returns {string[]} Array of words.
  */
 function textToNormalizedWordsArray(text) {
-  return text.trim().toLowerCase().split(/\W+/);
+  return text.trim().toLowerCase().split(/\Ww+/);
 }
 
 export default textToNormalizedWordsArray;
