@@ -64,11 +64,9 @@ const App = () => {
    * Creates a new user if no user info or validates existing user.
    */
   useEffect(() => {
-    if (!profileIsDeletedStatus) {
-      if (!userId) {
-        // No user -> request to create a new user
-        dispatch(createUser());
-      }
+    if (!profileIsDeletedStatus && !userId) {
+      // No user -> request to create a new user
+      dispatch(createUser());
     }
   }, [dispatch, userId, profileIsDeletedStatus]);
 
