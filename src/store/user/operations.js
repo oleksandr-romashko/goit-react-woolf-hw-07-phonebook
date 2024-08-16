@@ -128,10 +128,13 @@ export const updateUserKey = createAsyncThunk(
 
     try {
       // Prepare request and handle possible rejection if current user is not valid.
-      const prepareResult = await prepareRequestUser(thunkAPI);
-      const { id: userId } = thunkAPI.getState().user;
+      const prepareResult = await prepareRequestUser(
+        thunkAPI.dispatch,
+        thunkAPI.getState
+      );
 
       if (!prepareResult?.payload) {
+        const { id: userId } = thunkAPI.getState().user;
         // Current user data are valid -> make request to backend for the key change
         // Use PUT request PATCH requests are blocked by server CORS policy, i.e.use put request
         await api.put(`users/${userId}`, { key: userKey });
@@ -180,7 +183,7 @@ export const deleteCurrentUser = createAsyncThunk(
     );
 
     try {
-      await prepareRequestUser(thunkAPI);
+      await prepareRequestUser(thunkAPI.dispatch, thunkAPI.getState);
       const { id: userId } = thunkAPI.getState().user;
       const response = await api.delete(`users/${userId}`);
       thunkAPI.dispatch(
@@ -224,13 +227,13 @@ export const deleteCurrentUser = createAsyncThunk(
  * @param {object} thunkAPI The thunk API object provided by createAsyncThunk.
  * @throws {Error} Error in case of unsatisfactory data of failed request.
  */
-export const prepareRequestUser = async thunkAPI => {
+export const prepareRequestUser = async (dispatch, getState) => {
   try {
     // Rehydrate user data from persistent storage
-    rehydrateUserData(thunkAPI);
+    rehydrateUserData({ dispatch, getState });
 
     // Validate user credentials
-    const isValidUser = await validateUserCredentials(thunkAPI.getState().user);
+    const isValidUser = await validateUserCredentials(getState().user);
 
     // Check if user data is valid
     if (!isValidUser) {
@@ -239,8 +242,8 @@ export const prepareRequestUser = async thunkAPI => {
       throw new Error(errorMessage);
     }
   } catch (error) {
-    thunkAPI.dispatch(setProfileErrorAction(error.message));
-    return thunkAPI.rejectWithValue(error.message);
+    dispatch(setProfileErrorAction(error.message));
+    return false;
   }
   return true;
 };

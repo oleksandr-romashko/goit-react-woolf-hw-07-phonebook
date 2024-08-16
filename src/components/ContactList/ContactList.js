@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, useStore } from 'react-redux';
 
 import {
   selectContacts,
@@ -20,6 +20,7 @@ import {
   fetchContacts,
   syncContacts,
 } from 'store/contacts/operations';
+import { prepareRequestUser } from 'store/user/operations';
 
 import textToNormalizedWordsArray from 'components/helpers/textToNormalizedWordsArray';
 import { sortAsc } from 'helpers/sort';
@@ -42,6 +43,7 @@ const POLLING_INTERVAL = 30000;
  * @returns {JSX.Element} Rendered list of contacts or default message.
  */
 const ContactList = () => {
+  const store = useStore(); // Get the Redux store
   const dispatch = useDispatch();
 
   const contacts = useSelector(selectContacts);
@@ -64,9 +66,15 @@ const ContactList = () => {
     dispatch(fetchContacts());
 
     // Function to synch contacts if the tab is active
-    const fetchContactsIfVisible = () => {
+    const fetchContactsIfVisible = async () => {
       if (document.visibilityState === 'visible') {
-        dispatch(syncContacts());
+        // Validate the user before proceeding with the sync
+        const result = await prepareRequestUser(dispatch, store.getState); // Use await for async function
+
+        // Only dispatch syncContacts if user validation was successful
+        if (result === true) {
+          dispatch(syncContacts());
+        }
       }
     };
 
@@ -80,20 +88,33 @@ const ContactList = () => {
     return () => {
       clearInterval(pollingIntervalRef.current);
     };
-  }, [dispatch]);
+  }, [dispatch, store]);
 
   // Set up visibility change event listener for polling updates.
   useEffect(() => {
-    const handleVisibilityChange = () => {
+    // Function to validate the user and sync contacts if the tab is visible
+    const handleContactsSync = async () => {
       if (document.visibilityState === 'visible') {
-        dispatch(syncContacts());
+        // Validate the user before proceeding with the sync
+        const result = await prepareRequestUser(dispatch, store.getState);
+
+        // Only dispatch syncContacts if user validation was successful
+        if (result === true) {
+          dispatch(syncContacts());
+        }
       }
     };
+
+    const handleVisibilityChange = () => {
+      handleContactsSync(); // Use the refactored function
+    };
+
     document.addEventListener('visibilitychange', handleVisibilityChange);
+
     return () => {
       document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
-  }, [dispatch]);
+  }, [dispatch, store]);
 
   if (loading && !status) {
     return <Loader text="Just a moment, loading your contacts!" />;

@@ -9,13 +9,6 @@ import { setContactsAction } from './slice';
 export const syncContacts = createAsyncThunk(
   'contacts/syncContacts',
   async (_, thunkAPI) => {
-    const prepareResult = await prepareRequestUser(thunkAPI);
-
-    // do not proceed if failed with request preparation
-    if (prepareResult !== true) {
-      return prepareResult;
-    }
-
     // Get current contacts from app state
     const { items: currentContacts } = thunkAPI.getState().contacts;
 
@@ -50,11 +43,14 @@ export const syncContacts = createAsyncThunk(
 export const fetchContacts = createAsyncThunk(
   'contacts/fetchContacts',
   async (_, thunkAPI) => {
-    const prepareResult = await prepareRequestUser(thunkAPI);
+    const prepareResult = await prepareRequestUser(
+      thunkAPI.dispatch,
+      thunkAPI.getState
+    );
 
     // do not proceed if failed with request preparation
     if (prepareResult !== true) {
-      return prepareResult;
+      return thunkAPI.rejectWithValue(prepareResult);
     }
 
     try {
@@ -83,7 +79,10 @@ export const addContact = createAsyncThunk(
   async ({ name, number }, thunkAPI) => {
     try {
       // Prepare request and handle possible rejection
-      const prepareResult = await prepareRequestUser(thunkAPI);
+      const prepareResult = await prepareRequestUser(
+        thunkAPI.dispatch,
+        thunkAPI.getState
+      );
       if (prepareResult?.payload) {
         // If prepareRequestUser returned an error payload, exit early
         return thunkAPI.rejectWithValue(prepareResult.payload);
@@ -137,7 +136,10 @@ export const deleteContactById = createAsyncThunk(
   async (contactId, thunkAPI) => {
     try {
       // Prepare request and handle possible rejection
-      const prepareResult = await prepareRequestUser(thunkAPI);
+      const prepareResult = await prepareRequestUser(
+        thunkAPI.dispatch,
+        thunkAPI.getState
+      );
       if (prepareResult?.payload) {
         // If prepareRequestUser returned an error payload, exit early
         return thunkAPI.rejectWithValue(prepareResult.payload);
@@ -189,7 +191,10 @@ export const deleteContacts = createAsyncThunk(
     }
 
     // Prepare request and handle possible rejection
-    const prepareResult = await prepareRequestUser(thunkAPI);
+    const prepareResult = await prepareRequestUser(
+      thunkAPI.dispatch,
+      thunkAPI.getState
+    );
     if (prepareResult?.payload) {
       // If prepareRequestUser returned an error payload, exit early
       return thunkAPI.rejectWithValue(prepareResult.payload);
