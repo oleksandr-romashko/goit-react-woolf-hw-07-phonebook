@@ -8,10 +8,7 @@ import {
   selectError,
 } from 'store/contacts/selectors';
 import { setFilterAction } from 'store/filter/slice';
-import {
-  rejectContactAddWhenExistsAction,
-  CONTACTS_REQUEST_STATUS,
-} from 'store/contacts/slice';
+import { CONTACTS_REQUEST_STATUS } from 'store/contacts/slice';
 import { addContact } from 'store/contacts/operations';
 
 import Input from 'components/Input/Input.styled';
@@ -40,7 +37,6 @@ const PHONE_NUMBER_PATTERN_REGEX =
  * @returns {JSX.Element} Rendered contact form component.
  */
 const ContactForm = () => {
-  const contacts = useSelector(selectContacts);
   const status = useSelector(selectStatus);
   const isFormLoading = useSelector(selectIsFormLoading);
   const error = useSelector(selectError);
