@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 
-import { createUser, validateUser } from 'store/user/operations';
+import { createUser } from 'store/user/operations';
 import {
   setIsDisclaimerModalOpenAction, setIsUserProfileModalOpenAction
 } from 'store/modals/slice';
@@ -68,8 +68,6 @@ const App = () => {
       if (!userId) {
         // No user -> request to create a new user
         dispatch(createUser());
-      } else {
-        dispatch(validateUser());
       }
     }
   }, [dispatch, userId, profileIsDeletedStatus]);
