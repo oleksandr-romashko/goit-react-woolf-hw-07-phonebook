@@ -9,7 +9,12 @@ import { setContactsAction } from './slice';
 export const syncContacts = createAsyncThunk(
   'contacts/syncContacts',
   async (_, thunkAPI) => {
-    await prepareRequestUser(thunkAPI);
+    const prepareResult = await prepareRequestUser(thunkAPI);
+
+    // do not proceed if failed with request preparation
+    if (prepareResult !== true) {
+      return prepareResult;
+    }
 
     // Get current contacts from app state
     const { items: currentContacts } = thunkAPI.getState().contacts;
@@ -45,7 +50,12 @@ export const syncContacts = createAsyncThunk(
 export const fetchContacts = createAsyncThunk(
   'contacts/fetchContacts',
   async (_, thunkAPI) => {
-    await prepareRequestUser(thunkAPI);
+    const prepareResult = await prepareRequestUser(thunkAPI);
+
+    // do not proceed if failed with request preparation
+    if (prepareResult !== true) {
+      return prepareResult;
+    }
 
     try {
       const { id: userId } = thunkAPI.getState().user;
