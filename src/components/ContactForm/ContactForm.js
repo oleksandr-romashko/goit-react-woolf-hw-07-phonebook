@@ -80,18 +80,6 @@ const ContactForm = () => {
       event.target['add-button'].blur();
     }
 
-    const isExists = contacts.some(
-      ({ name: existingName }) =>
-        existingName.toLowerCase() === name.toLowerCase()
-    );
-    if (isExists) {
-      // Handle case when contact is already exist in the state
-      dispatch(
-        rejectContactAddWhenExistsAction('Contact is already in the list')
-      );
-      return;
-    }
-
     dispatch(addContact({ name, number }));
 
     // On addContact - clear filter to see a newly added contact to the list
