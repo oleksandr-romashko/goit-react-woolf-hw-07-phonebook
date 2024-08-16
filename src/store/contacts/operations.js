@@ -95,7 +95,7 @@ export const addContact = createAsyncThunk(
       const { items: currentContacts } = thunkAPI.getState().contacts;
       if (currentContacts.find(el => el.name === name)) {
         return thunkAPI.rejectWithValue(
-          `Contact ${name} already exists in the list.`
+          `Contact '${name}' already exists in the list`
         );
       }
 

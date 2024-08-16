@@ -130,7 +130,7 @@ const ContactForm = () => {
         >
           <span className="info-text success-text">{INFO_ADD_SUCCESSFUL}</span>
           <span className="info-text failure-text">{`${INFO_ADD_FAILED}${
-            error && `: ${error}`
+            error ? `: ${error}` : ''
           }.`}</span>
         </InfoText>
       </AddButtonWrapper>

@@ -121,7 +121,9 @@ export const contactsSlice = createSlice({
       })
 
       .addMatcher(
-        action => action.type.endsWith('/pending'),
+        action =>
+          action.type.endsWith('/pending') &&
+          !action.type.includes('syncContacts'),
         state => {
           state.error = null;
           state.info = null;
