@@ -138,7 +138,7 @@ const ContactForm = () => {
                 status === CONTACTS_REQUEST_STATUS.addContact.failed &&
                 'failure'))
           }
-          data-show-condition={
+          data-info-show={
             (status &&
               (status === CONTACTS_REQUEST_STATUS.addContact.successful ||
                 status === CONTACTS_REQUEST_STATUS.addContact.failed)) ||
